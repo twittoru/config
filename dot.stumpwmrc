@@ -1,0 +1,159 @@
+;; -*-lisp-*-
+;; vim:set ft=lisp:
+(require :cl-ppcre)
+(require :drakma)
+(require :cl-json)
+(in-package :stumpwm)
+
+;; for *authorization*
+(load userdata.lisp)
+
+;; command {{{1
+;gnome-terminal -> urxvtc
+(defcommand open-terminal () ()
+			(run-shell-command "urxvtc -e zsh"))
+(define-key *root-map* (kbd "C-c") "open-terminal")
+(define-key *root-map* (kbd "c") "open-terminal")
+
+;emacs -> emacs -nw
+(defcommand emacs () ()
+			(run-shell-command "urxvtc -e emacs -nw"))
+(define-key *root-map* (kbd "C-e") "emacs")
+
+;firefox
+(defcommand firefox () ()
+			(run-shell-command "firefox"))
+(define-key *root-map* (kbd "C-f") "firefox")
+
+;background pict change
+(defcommand background-change () ()
+			(background-changer))
+(define-key *root-map* (kbd "Hiragana_Katakana") "background-change")
+
+;gyazo
+(defcommand take-gyazo () ()
+			(run-shell-command "/home/tor/bin/gyazo.rb"))
+;(define-key *root-map* (kbd "Henkan") "take-gyazo")
+
+(defcommand twitter-say () ()
+			(twitter-say))
+(define-key *root-map* (kbd "Muhenkan") "twitter-say")
+
+;; parameter {{{1
+;font set
+(set-font "-kochi-gothic-medium-r-normal-*-*-120-*-*-p-*-iso10646-1")
+
+(setf *forcus-color* "black")
+(setf *unforcus-color* "gray")
+
+(set-fg-color "snow")
+(set-bg-color "black")
+
+;;; border {{{2
+(set-border-color "black")
+(setf *window-border-style* :none)
+(setf *maxsize-border-widthi* 1)
+(setf *transient-border-width* 1)
+(setf *normal-border-width* 1)
+(setf *window-border-style* 1)
+
+      
+;;; mode-line {{{2
+(setf *screen-mode-line-format*
+      (list "%w|%g|"
+	    '(:eval (stumpwm:run-shell-command "date +%_I:%M:%S%p--%e-%a|tr -d [:cntrl:]" t))))
+(setf *mode-line-position* :bottom)
+(setf *mode-line-border-width* 0)
+(setf *mode-line-foreground-color* "lightcyan")
+(setf *mode-line-background-color* "black")
+;; my functions {{{1
+(defun twitter-say ()
+  "Show prompt for update statuse for twitter"
+  (post-twitter (read-one-line (current-screen) "What are you doing ? ")))
+
+(defun cat (&rest strings)
+  "Concatenates strings, like the Unix command 'cat'. A shortcut for (concatenate 'string foo bar)."
+  (apply 'concatenate 'string strings))
+
+(setf twitter-reply-timeline nil)
+(setq *random-state* (make-random-state t))
+(setq pictpath "/home/tor/Pictures/")
+(defun background-changer ()
+  "background changer in common lisp"
+  (let ((image-list
+	  (remove-if #'(lambda (c) (not (cl-ppcre:scan "\.(jpg|png)$" c)))    
+		     (cl-ppcre:split "\\n"
+				     (with-output-to-string (out)
+				       (sb-ext:run-program "ls" (list pictpath)
+							   :output out
+							   :search '("/bin")
+							   :environment '("LANG=ja_JP.utf-8")))))))
+    (sb-ext:run-program "xsetbg"
+			(list "-smooth" "-fullscreen"
+			      (concatenate 'string
+					   pictpath
+					   (nth (random (1- (length image-list))) image-list)))
+			:output *standard-output*
+			:search '("/usr/bin"))))
+
+(defun show-twitter-reply-timeline (&optional (n 1))
+;  (let ((n (floor (read-from-string (stumpwm:run-shell-command "date +%S" t)) 10)))
+    (if (= n 0)
+      (get-new-timeline)
+;      (setf *screen-mode-line-format*
+	    (list (cdr (assoc ':SCREEN_NAME 
+			      (cdr (assoc ':USER
+					  (nth (1- n) twitter-reply-timeline)))))
+		  (cdr (assoc ':TEXT
+			      (cdr (nth (1- n) twitter-reply-timeline)))))))
+;))
+
+(defun get-new-timeline ()
+  (setf twitter-reply-timeline (get-twitter-reply-timeline)))
+
+(defun get-twitter-reply-timeline ()
+  (json:decode-json-from-string 
+    (sb-ext:octets-to-string
+      (drakma:http-request "http://www.twitter.com/statuses/replies.json"
+			   :basic-authorization *authorization*))))
+;(setf twitter-timer 
+;      (stumpwm:run-with-timer 1 10 #'stumpwm::show-twitter-reply-timeline))
+
+(defun post-twitter (twit &optional (post-to 0))
+  (if (null twit)
+    (print "Abort.")
+    (drakma:http-request (nth post-to
+                              '("http://www.twitter.com/statuses/update.json" "http://api.wassr.jp/statuses/update.json"))
+                         :basic-authorization *authorization*
+                         :method :post
+                         :parameters (list (cons '"status"  twit)))))
+
+;(defcommand "mymenu" ()
+;			(labels ((pick (options)
+;				       (let ((selection (stumpwm::select-from-menu (current-screen) options "")))
+;					 (cond
+;					   ((null selection)
+;					    (throw 'stumpwm::error "Abort."))
+;					   ((stringp (second selection))
+;					    (second selection))
+;					   (t
+;					     (pick (cdr selection)))))))
+;			  (let ((choice (pick *app-menu*)))
+;			    (run-shell-command choice))))
+
+;(defparameter *app-menu* '(("INTERNET"
+;			    ;; sub menu
+;			    ("Firefox" "firefox")
+;			    ("Skype" "skype"))
+;			   ("FUN"
+;			    ;; sub menu
+;			    ("option 2" "xlogo")
+;			    ("GnuChess" "xboard"))
+;			   ("WORK"
+;			    ;;submenu
+;			    ("OpenOffice.org" "openoffice"))
+;			   ("GRAPHICS"
+;			    ;;submenu
+;			    ("GIMP" "gimp"))
+;			   ("K3B" "k3b")))
+
