@@ -12,7 +12,7 @@ noremap t :tabopen .<Space>
 imap <C-j> <Nop>
 " command for web services
 " どうにかしたい。
-command! hb :open hb
+command! hb :open javascript:window.location='http://b.hatena.ne.jp/add?mode=confirm&title='+escape(document.title)+'&url='+escape(location.href);
 command! gr :open javascript:var%20b=document.body;var%20GR________bookmarklet_domain='http://www.google.com';if(b&&!document.xmlVersion){void(z=document.createElement('script'));void(z.src='http://www.google.com/reader/ui/subscribe-bookmarklet.js');void(b.appendChild(z));}else{location='http://www.google.com/reader/view/feed/'+encodeURIComponent(location.href)}
 command! ldr :open javascript:location.href='http://reader.livedoor.com/subscribe/'+location.href
 
