@@ -44,8 +44,6 @@
 
 (defcommand lefty () ()
             (run-shell-command "xmodmap -e 'pointer = 3 2 1'"))
-(defcommand dualdisp () ()
-            (run-shell-command "xrandr --output VGA --right-of LVDS"))
 
 ;; parameter {{{1
 ;font set

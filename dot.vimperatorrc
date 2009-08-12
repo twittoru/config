@@ -1,61 +1,16 @@
 " vimperatorrc fot Vimperator 2.1
 
 echo 'loading...'
-
-" Mappings {{{1
-noremap j 5<C-e>
-noremap k 5<C-y>
-noremap J <C-f> 
-noremap K <C-b>
-noremap H gT
-noremap L gt
-noremap h <C-o>
-noremap l <C-i>
-noremap	<C-w> <Esc>:bdelete<CR>
-noremap o :open .<Space>
-noremap t :tabopen .<Space>
-noremap U :undo<Space>
-
-" always ready to edge my sword
-noremap ,s :so ~/.vimperatorrc<CR>
-
-" social bookmark
-noremap A <Esc>:sbm<Space>[
-
-" ldrize cooperation
-noremap q :toggleldrc<CR>
-
-" twitter 
-noremap ,t <Esc>:twitter<Space>
-noremap ,@ <Esc>:twitter!@<Space>
-
-" pinned itme open
-noremap ,p <Esc>:pinneditemopen<CR>
-
-" feedSomeKeys
-autocmd LocationChange .* :fmapc
-"" google reader
-autocmd LocationChange 'www\.google\.com/reader' :fmap! -vkey j k n p m s v A r S N P X O gh ga gs gt gu / ?
-"" gmail
-autocmd LocationChange 'mail\.google\.com/mail' :fmap -depth 4 c / j k n p o u e x s r a # [ ] z ! ? gi gs gt gd ga gc
- 
-
-
-" for uim-skk
-map <C-j> <Nop>
-imap <C-j> <Nop>
-cmap <C-j> <Nop>
-
-"}}}
+mapclear
+imapclear
+cmapclear
+autocmd!
 
 " command for web services
 " anti-bookmarklet {{{1
 " hatena bookmark {{{2
 command! hb :open javascript:window.location='http://b.hatena.ne.jp/add?mode=confirm&title='+escape(document.title)+'&url='+escape(location.href);
 "}}}
-" google reader {{{2
-command! gr :open javascript:var%20b=document.body;var%20GR________bookmarklet_domain='http://www.google.com';if(b&&!document.xmlVersion){void(z=document.createElement('script'));void(z.src='http://www.google.com/reader/ui/subscribe-bookmarklet.js');void(b.appendChild(z));}else{location='http://www.google.com/reader/view/feed/'+encodeURIComponent(location.href)}
-"2}}}
 " livedoor reader {{{2
 command! ldr :open javascript:location.href='http://reader.livedoor.com/subscribe/'+location.href
 "2}}}
@@ -95,11 +50,69 @@ let g:direct_sbm_is_use_migemo="false"
  
  
 "" firefox options {{{2
+set! ui.key.generalAccessKey = 0
 set! browser.sessionstore.max_tab_undo=20
 
 "2}}}
 "1}}}
 
+
+" Mappings {{{1
+noremap j 5<C-e>
+noremap k 5<C-y>
+noremap J <C-f>
+noremap K <C-b>
+noremap H gT
+noremap L gt
+noremap h <C-o>
+noremap l <C-i>
+noremap	<C-w> <Esc>:bdelete<CR>
+noremap o :open .<Space>
+noremap t :tabopen .<Space>
+noremap U :undo<Space>
+map . <Nop>
+
+" always ready to edge my sword
+noremap ,s :so ~/.vimperatorrc<CR>
+noremap ,e :!gvim ~/.vimperatorrc<CR>
+
+" social bookmark
+noremap A <Esc>:sbm<Space>[
+
+" ldrize cooperation
+noremap q :toggleldrc<CR>
+
+" twitter 
+noremap ,t <Esc>:twitter<Space>
+noremap ,@ <Esc>:twitter!@<CR>
+
+" pinned itme open
+noremap ,p <Esc>:pinneditemopen<CR>
+
+" feedSomeKeys
+autocmd LocationChange .* :fmapc
+"" gmail
+autocmd LocationChange 'mail\.google\.com/mail' :fmap -depth 4 c / j k n p o u e x s r a # [ ] z ! ? gi gs gt gd ga gc
+"" LDR
+autocmd LocationChange reader\\.livedoor\\.com/reader :fmap! j k s a p c <Space> <S-Space> z < >
+
+
+" for uim-skk
+map <C-j> <Nop>
+imap <C-j> <Nop>
+cmap <C-j> <Nop>
+
+"}}}
+
+
+" userjavascript&stylesheet  http://d.hatena.ne.jp/pekepekesamurai/20081115/1226733774
+
+" block referer http://d.hatena.ne.jp/wocota/20081230/1230627189
+autocmd LocationChange .* 				set! network.http.sendRefererHeader=2
+autocmd LocationChange 'reader\.livedoor\.com/reader' 	set! network.http.sendRefererHeader=1
+autocmd LocationChange 'localhost'   			set! network.http.sendRefererHeader=0
+autocmd LocationChange '127\.0\.0\.1'		        set! network.http.sendRefererHeader=0
+autocmd LocationChange 'www\.google\.com' 		set! network.http.sendRefererHeader=0
 
 echo 'finish! hello vimperator.'
 
