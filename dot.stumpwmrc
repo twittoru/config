@@ -45,6 +45,11 @@
 (defcommand lefty () ()
             (run-shell-command "xmodmap -e 'pointer = 3 2 1'"))
 
+; vi-like focus selection
+(define-key *root-map* (kbd "l") "move-focus right")
+(define-key *root-map* (kbd "k") "move-focus up")
+(define-key *root-map* (kbd "j") "move-focus down")
+(define-key *root-map* (kbd "h") "move-focus left")
 ;; parameter {{{1
 ;font set
 (set-font "-kochi-gothic-medium-r-normal-*-*-120-*-*-p-*-iso10646-1")
@@ -103,6 +108,7 @@
 			:output *standard-output*
 			:search '("/usr/bin"))))
 
+#|
 (defun show-twitter-reply-timeline (&optional (n 1))
 ;  (let ((n (floor (read-from-string (stumpwm:run-shell-command "date +%S" t)) 10)))
     (if (= n 0)
@@ -123,9 +129,6 @@
     (sb-ext:octets-to-string
       (drakma:http-request "http://www.twitter.com/statuses/replies.json"
 			   :basic-authorization '(mail pass)))))
-;(setf twitter-timer 
-;      (stumpwm:run-with-timer 1 10 #'stumpwm::show-twitter-reply-timeline))
-
 (defun post-twitter (twit &optional (post-to 0))
   (if (null twit)
     (print "Abort.")
@@ -134,6 +137,8 @@
                          :basic-authorization '(mail pass)
                          :method :post
                          :parameters (list (cons '"status"  twit)))))
+;}}}
+|#
 
 ;(defcommand "mymenu" ()
 ;			(labels ((pick (options)
@@ -169,4 +174,6 @@
 ;(add-hook *focus-frame-hook* 'widen-window)
 
 (clear-window-placement-rules)
+
+
 

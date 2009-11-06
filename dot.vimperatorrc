@@ -22,6 +22,7 @@ command! ldr :open javascript:location.href='http://reader.livedoor.com/subscrib
 " goodbye all goodbye
 set showtabline=0 
 set guioptions=
+set titlestring=""
 " :help open on new tab 
 set newtab=help
 " びむぺれったらさいきょーね！
@@ -29,6 +30,7 @@ set complete=l
 set wildoptions=auto
 
 set ignorecase
+set smartcase
 set focuscontent
 
 " no bell & visualbell
@@ -66,11 +68,12 @@ noremap H gT
 noremap L gt
 noremap h <C-o>
 noremap l <C-i>
-noremap	<C-w> <Esc>:bdelete<CR>
 noremap o :open .<Space>
 noremap t :tabopen .<Space>
 noremap U :undo<Space>
 map . <Nop>
+noremap ; :
+noremap : ;
 
 " always ready to edge my sword
 noremap ,s :so ~/.vimperatorrc<CR>
@@ -94,7 +97,7 @@ autocmd LocationChange .* :fmapc
 "" gmail
 autocmd LocationChange 'mail\.google\.com/mail' :fmap -depth 4 c / j k n p o u e x s r a # [ ] z ! ? gi gs gt gd ga gc
 "" LDR
-autocmd LocationChange reader\\.livedoor\\.com/reader :fmap! j k s a p c <Space> <S-Space> z < >
+autocmd LocationChange 'reader\.livedoor\.com/reader' :fmap! j k s a p c <Space> <S-Space> z < >
 
 
 " for uim-skk
@@ -105,7 +108,6 @@ cmap <C-j> <Nop>
 "}}}
 
 
-" userjavascript&stylesheet  http://d.hatena.ne.jp/pekepekesamurai/20081115/1226733774
 
 " block referer http://d.hatena.ne.jp/wocota/20081230/1230627189
 autocmd LocationChange .* 				set! network.http.sendRefererHeader=2
