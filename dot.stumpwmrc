@@ -1,55 +1,13 @@
 ;; -*-lisp-*-
 ;; vim:set ft=lisp:
 (require :cl-ppcre)
-(require :drakma)
-(require :cl-json)
 (in-package :stumpwm)
 
+#| ;; init -> replaced by gnome
 (if (not (boundp 'load-initfile))
-  (run-shell-command "~/.stumpwminit"))
+  (run-shell-command "~/.stumpwm.d/.stumpwminit"))
 (setf load-initfile nil)
-;; command {{{1
-;gnome-terminal -> urxvtc
-(defcommand open-terminal () ()
-			(run-shell-command "urxvtc -e zsh"))
-(define-key *root-map* (kbd "C-c") "open-terminal")
-(define-key *root-map* (kbd "c") "open-terminal")
-
-;emacs -> emacs -nw
-(defcommand emacs () ()
-			(run-shell-command "urxvtc -e emacs-snapshot -nw"))
-(define-key *root-map* (kbd "C-e") "emacs")
-
-;firefox
-(defcommand firefox () ()
-			(run-shell-command "firefox-3.5"))
-(define-key *root-map* (kbd "C-f") "firefox")
-
-;background pict change
-(defcommand background-change () ()
-			(background-changer))
-(define-key *root-map* (kbd "Hiragana_Katakana") "background-change")
-
-;gyazo
-(defcommand take-gyazo () ()
-			(run-shell-command "/home/tor/bin/gyazo.rb"))
-;(define-key *root-map* (kbd "Henkan") "take-gyazo")
-
-(defcommand twitter-say () ()
-			(twitter-say))
-(define-key *root-map* (kbd "Muhenkan") "twitter-say")
-
-(defcommand desktop () ()
-            (run-shell-command "/home/tor/bin/home.sh"))
-
-(defcommand lefty () ()
-            (run-shell-command "xmodmap -e 'pointer = 3 2 1'"))
-
-; vi-like focus selection
-(define-key *root-map* (kbd "l") "move-focus right")
-(define-key *root-map* (kbd "k") "move-focus up")
-(define-key *root-map* (kbd "j") "move-focus down")
-(define-key *root-map* (kbd "h") "move-focus left")
+|#
 ;; parameter {{{1
 ;font set
 (set-font "-kochi-gothic-medium-r-normal-*-*-120-*-*-p-*-iso10646-1")
@@ -78,36 +36,37 @@
 (setf *mode-line-foreground-color* "lightcyan")
 (setf *mode-line-background-color* "black")
 ;; my functions {{{1
-
+(defun cat (&rest strings)
+  "Concatenates strings, like the Unix command 'cat'. A shortcut for (concatenate 'string foo bar)."
+  (apply 'concatenate 'string strings))
+#|
 (defun twitter-say ()
   "Show prompt for update statuse for twitter"
   (post-twitter (read-one-line (current-screen) "What are you doing ? ")))
 
-(defun cat (&rest strings)
-  "Concatenates strings, like the Unix command 'cat'. A shortcut for (concatenate 'string foo bar)."
-  (apply 'concatenate 'string strings))
 
 (setf twitter-reply-timeline nil)
+|#
+
 (setq *random-state* (make-random-state t))
-(setq pictpath "/home/tor/Pictures/")
+(defvar pict-path "/home/tor/Pictures/")
+(defvar pict-option "/desktop/gnome/background/picture_filename")
+;;; find | grep | sort -r | head -1 | xargs gconftool-2
 (defun background-changer ()
   "background changer in common lisp"
   (let ((image-list
-	  (remove-if #'(lambda (c) (not (cl-ppcre:scan "\.(jpg|png)$" c)))    
+	  (remove-if #'(lambda (c) (not (cl-ppcre:scan "\.(jpg|png|gif)$" c)))
 		     (cl-ppcre:split "\\n"
 				     (with-output-to-string (out)
-				       (sb-ext:run-program "ls" (list pictpath)
+				       (sb-ext:run-program "find" (list pict-path)
 							   :output out
 							   :search '("/bin")
 							   :environment '("LANG=ja_JP.utf-8")))))))
-    (sb-ext:run-program "xsetbg"
-			(list "-smooth" "-fullscreen" "-border" "black"
-			      (concatenate 'string
-					   pictpath
-					   (nth (random (1- (length image-list))) image-list)))
+    (sb-ext:run-program "gconftool-2"
+			(list "--type" "string" "--set" pict-option
+                  (nth (random (1- (length image-list))) image-list))
 			:output *standard-output*
 			:search '("/usr/bin"))))
-
 #|
 (defun show-twitter-reply-timeline (&optional (n 1))
 ;  (let ((n (floor (read-from-string (stumpwm:run-shell-command "date +%S" t)) 10)))
@@ -137,8 +96,50 @@
                          :basic-authorization '(mail pass)
                          :method :post
                          :parameters (list (cons '"status"  twit)))))
-;}}}
 |#
+;}}}
+;; command {{{1
+;gnome-terminal -> urxvtc
+(defcommand open-terminal () ()
+			(run-shell-command "urxvtc -e zsh"))
+(define-key *root-map* (kbd "C-c") "open-terminal")
+(define-key *root-map* (kbd "c") "open-terminal")
+
+;emacs -> emacs -nw
+(defcommand emacs () ()
+			(run-shell-command "urxvtc -e emacs -nw"))
+(define-key *root-map* (kbd "C-e") "emacs")
+
+;firefox
+(defcommand firefox () ()
+			(run-shell-command "firefox"))
+(define-key *root-map* (kbd "C-f") "firefox")
+
+;background pict change
+(defcommand background-change () ()
+			(background-changer))
+(define-key *root-map* (kbd "Hiragana_Katakana") "background-change")
+
+;gyazo
+(defcommand take-gyazo () ()
+			(run-shell-command "/home/tor/bin/gyazo.rb"))
+;(define-key *root-map* (kbd "Henkan") "take-gyazo")
+
+#|
+(defcommand twitter-say () ()
+			(twitter-say))
+(define-key *root-map* (kbd "Muhenkan") "twitter-say")
+|#
+
+(defcommand lefty () ()
+            (run-shell-command "xmodmap -e 'pointer = 3 2 1'"))
+
+; vi-like focus selection
+(define-key *root-map* (kbd "l") "move-focus right")
+(define-key *root-map* (kbd "k") "move-focus up")
+(define-key *root-map* (kbd "j") "move-focus down")
+(define-key *root-map* (kbd "h") "move-focus left")
+#|{{{1misc
 
 ;(defcommand "mymenu" ()
 ;			(labels ((pick (options)
@@ -174,6 +175,8 @@
 ;(add-hook *focus-frame-hook* 'widen-window)
 
 (clear-window-placement-rules)
+|#
+
 
 
 
