@@ -1,0 +1,356 @@
+;; -*- emacs-lisp -*-
+;; .emacs 21 for euske
+
+(set-language-environment "Japanese")
+(global-font-lock-mode t)
+(cd "~/")
+
+;;  display
+;;
+(defun display-to-screen (s) (interactive "sString: ")
+  (if (and (not window-system) (string-equal "screen" (getenv "TERM")))
+      (send-string-to-terminal (concat "\033k" s "\033\134"))))
+(if window-system
+    (progn
+      (setq visible-bell t)
+      (server-start)
+      (menu-bar-mode -1)
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1))
+  (progn
+    (setq visible-bell nil)
+    (set-terminal-coding-system 'euc-jp)
+    (menu-bar-mode -1)
+    (defun display-window-title () (interactive) (display-to-screen "Emacs"))
+    (add-hook 'suspend-resume-hook (function display-window-title))
+    (display-window-title)
+    (set-face-foreground 'mode-line "gold")
+    (set-face-background 'mode-line "black")
+    ))
+
+
+;;  general
+;;
+(put 'eval-expression 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+(setq-default fill-column 66)
+(put 'downcase-region 'disabled nil)
+(prefer-coding-system 'euc-jp)
+(setq next-line-add-newlines nil
+      inhibit-startup-message t
+      require-final-newline  t
+      auto-save-list-file-prefix nil
+      suggest-key-bindings   nil
+      dired-listing-switches "-ao"
+;      scroll-conservatively  1
+      default-buffer-file-coding-system 'euc-jp
+      make-backup-files      nil
+      )
+
+
+;;  find-exist-file
+;;
+(defun find-exist-file (fname) (interactive "fFind exist file: ")
+  (if (car (file-attributes
+	    (file-chase-links (expand-file-name fname))))
+      (dired fname)
+    (find-file fname)))
+(global-set-key "\C-x\C-f" 'find-exist-file)
+(global-set-key "\C-xF"    'find-file)
+
+(defun add-load-path (d) (interactive "DLoad path: ")
+  (if (not (member d load-path))
+      (setq load-path (cons d load-path))))
+
+
+;;  display-time
+;;
+(setq display-time-24hr-format t)
+(display-time)
+(line-number-mode 1)
+(column-number-mode 1)
+
+
+;;  kanji operation
+;;
+(defun euc () (interactive) (set-buffer-file-coding-system 'euc-jp-unix))
+(defun jis () (interactive) (set-buffer-file-coding-system 'iso-2022-jp-unix))
+(defun sjis () (interactive) (set-buffer-file-coding-system 'sjis-unix))
+(defun dos () (interactive) (set-buffer-file-coding-system 'sjis-dos))
+
+
+;;  skk
+;;
+(defvar skk-isearch-switch t)
+(require 'skk "skk")
+(global-set-key "\C-x\C-j" 'skk-mode)
+
+
+;;  Python-mode
+;;
+(add-load-path "/usr/share/emacs/site-lisp/python-mode/")
+(require 'python-mode)
+(add-hook 'python-mode-hook
+	  (function (lambda ()
+		      (if (zerop (buffer-size))
+			  (insert-file "~/lib/python/python-template.py")))))
+
+
+;;  c-mode
+;;
+(setq c-default-style
+      '((java-mode . "java")
+	(other . "cc-mode")
+	))
+(defun c-indent-paragraph () (interactive)
+  (let ((endmark (progn (forward-paragraph 1) (point-marker))))
+    (backward-paragraph)
+    (while (< (point) (marker-position endmark))
+      (c-indent-command) (forward-line 1))))
+
+;;  c++-mode
+;;
+(setq c++-empty-arglist-indent 4
+      c++-friend-offset        0)
+(defun c++-indent-paragraph () (interactive)
+  (let ((endmark (progn (forward-paragraph 1) (point-marker))))
+    (backward-paragraph)
+    (while (< (point) (marker-position endmark))
+      (c++-indent-command) (forward-line 1))))
+(defvar c++-mode-map (make-sparse-keymap))
+(define-key c++-mode-map "\M-q" 'c++-indent-paragraph)
+
+
+;;  key bindings
+;;
+(global-unset-key "\C-j")
+(global-unset-key "\C-\]")
+(global-unset-key [insert])
+(global-unset-key [insertchar])
+(global-unset-key "\C-xm")
+(global-unset-key "\C-xt")
+(global-unset-key "\C-\\")
+(global-set-key "\M-r" 'query-replace-regexp)
+(global-set-key "\C-s" 'isearch-forward-regexp)
+(global-set-key "\C-r" 'isearch-backward-regexp)
+(global-set-key "\M-l" 'goto-line)
+(global-set-key "\C-xV" 'set-variable)
+(global-set-key "\M-\C-w" 'kill-ring-save)
+(global-set-key "\C-h\C-a" 'apropos)
+(global-set-key "\C-h\C-v" 'apropos-variable)
+(define-key minibuffer-local-map "\C-p" 'previous-history-element)
+(define-key minibuffer-local-map "\C-n" 'next-history-element)
+(define-key minibuffer-local-completion-map "\C-p" 'previous-history-element)
+(define-key minibuffer-local-completion-map "\C-n" 'next-history-element)
+(define-key minibuffer-local-ns-map "\C-p" 'previous-history-element)
+(define-key minibuffer-local-ns-map "\C-n" 'next-history-element)
+(define-key minibuffer-local-must-match-map "\C-p" 'previous-history-element)
+(define-key minibuffer-local-must-match-map "\C-n" 'next-history-element)
+
+
+;;  C-h <- Delete,  C-t <- C-h
+;;
+(setq key-translation-map (make-sparse-keymap))
+(define-key key-translation-map "\C-t" "\C-h")
+(define-key key-translation-map "\C-h" "\C-\?")
+(global-set-key "\M-h" 'backward-kill-word)
+; for screen
+(define-key key-translation-map "\M-OM" "\C-j")
+(define-key key-translation-map "\M-[A" [up])
+(define-key key-translation-map "\M-[B" [down])
+(define-key key-translation-map "\M-[C" [right])
+(define-key key-translation-map "\M-[D" [left])
+
+
+;;  miscellaneous
+;;
+(defun itelate (f begin end)
+  "Apply a given function at beginning of each lines of the region."
+  (let ((m (set-marker (make-marker) end)))
+    (goto-char begin)
+    (while (< (point) m)
+      (beginning-of-line)
+      (funcall f m)
+      (forward-line 1))))
+
+(defun filter (proc x)
+  (let ((r nil))
+    (dolist (e x r)
+      (if (funcall proc e)
+	  (setq r (cons e r))))))
+
+(defun startswith (s prefix)
+  (and (<= (length prefix) (length s))
+       (string= prefix (substring s 0 (length prefix)))))
+
+; disable ange-ftp
+(setq file-name-handler-alist
+      (filter 
+       (function (lambda (x) (not (startswith (symbol-name (cdr x)) "ange-ftp"))))
+       file-name-handler-alist))
+
+(defun eval-region-message (begin end) (interactive "r")
+  (eval-region begin end) (message "Eval done."))
+(global-set-key "\C-x\C-e" 'eval-region-message)
+
+(defun elmacro (begin end) (interactive "r")
+  (itelate (function (lambda (m) (save-excursion (call-last-kbd-macro))))
+	   begin end))
+
+(defun elinsert (begin end) (interactive "r")
+  (let ((s (read-from-minibuffer "String: ")))
+    (itelate (function (lambda (m) (insert s)))
+	     begin end)))
+
+(defun dediff (begin end) (interactive "r")
+  (itelate (function (lambda (m) 
+	     (if (search-forward-regexp "^\\(\\+ \\|- \\|> \\|< \\)" m t)
+		 (replace-match "" t t))))
+	   begin end))
+
+(defun tab (n) (interactive "nTab-width: ")
+  (setq tab-width n) (message "Tab-width is %d." n))
+
+(defun tmp () (interactive)
+  (switch-to-buffer "*scratch*") (lisp-interaction-mode))
+
+(defun x () (interactive) (insert-file "~/tmp/x"))
+
+(defun scr () (interactive)
+  (set-mark-command nil)
+  (call-process "xscrbuf-j" nil t t))
+(defun url () (interactive)
+  (set-mark-command nil)
+  (call-process "xscrbuf-url" nil t t))
+
+(defun copy-line-as-kill () (interactive)
+  (save-excursion
+    (let ((m (point)))
+      (beginning-of-line)
+      (forward-line 1)
+      (copy-region-as-kill m (point))
+      )))
+(global-set-key "\M-k" 'copy-line-as-kill)
+
+;(setq backup-by-copying t)
+;(fset 'make-backup-file-name
+;      (lambda (file) (concat (expand-file-name "~/.backup/")
+;			     (file-name-nondirectory file))))
+
+
+;;  html
+;;
+
+(defun html-convert-region (x y) (interactive "r")
+  (let ((m (set-marker (make-marker) y)))
+    (save-excursion
+      (goto-char x)
+      (while (search-forward "&" m t) (replace-match "&amp;" t t))
+      (goto-char x)
+     (while (search-forward ">" m t) (replace-match "&gt;" t t))
+      (goto-char x)
+      (while (search-forward "<" m t) (replace-match "&lt;" t t)))))
+
+(defun block (begin end) (interactive "r")
+  (let ((e (set-marker (make-marker) end)))
+    (goto-char begin) (insert-string "<blockquote>\n")
+    (goto-char e) (insert-string "</blockquote>\n")))
+
+(defun pre (begin end) (interactive "r")
+  (let ((e (set-marker (make-marker) end)))
+    (html-convert-region begin e)
+    (goto-char begin) (insert-string "<blockquote><pre>\n")
+    (goto-char e) (insert-string "</pre></blockquote>\n")))
+
+(defun html-insert-tag (begin end tag &optional attrs conv)
+  (let ((e (set-marker (make-marker) end))
+	(a (if (stringp attrs) (concat " " attrs) "")))
+    (if conv (html-convert-region begin end))
+    (goto-char begin) (insert-string (concat "<" tag a ">"))
+    (goto-char e) (insert-string (concat "</" tag ">"))
+    ))
+
+(setq html-mode-map (make-sparse-keymap))
+(define-key html-mode-map "\C-cs" (function (lambda (b e) (interactive "r") (html-insert-tag b e "strong"))))
+(define-key html-mode-map "\C-cr" (function (lambda (b e) (interactive "r") (html-insert-tag b e "span" "class=comment"))))
+(define-key html-mode-map "\C-cu" (function (lambda (b e) (interactive "r") (html-insert-tag b e "u"))))
+(define-key html-mode-map "\C-ce" (function (lambda (b e) (interactive "r") (html-insert-tag b e "em"))))
+(define-key html-mode-map "\C-cc" (function (lambda (b e) (interactive "r") (html-insert-tag b e "code" nil t))))
+(define-key html-mode-map "\C-ck" (function (lambda (b e) (interactive "r") (html-insert-tag b e "kbd" nil t))))
+
+;; timestamps
+(add-hook 'html-mode-hook
+	  (function (lambda () 
+		      (add-hook 'local-write-file-hooks 'html-update-timestamp))))
+(defvar html-helper-timestamp-start "<!-- hhmts start -->\n")
+(defvar html-helper-timestamp-end "<!-- hhmts end -->")
+(defun html-update-timestamp ()
+  "Basic function for updating timestamps. It finds the timestamp in
+the buffer by looking for html-helper-timestamp-start, deletes all text
+up to html-helper-timestamp-end, and runs html-helper-timestamp-hook
+which will presumably insert an appropriate timestamp in the buffer."
+  (save-excursion
+    (goto-char (point-max))
+    (if (not (search-backward html-helper-timestamp-start nil t))
+	(message "timestamp delimiter start was not found")
+      (let ((ts-start (+ (point) (length html-helper-timestamp-start)))
+	    (ts-end (if (search-forward html-helper-timestamp-end nil t)
+			(- (point) (length html-helper-timestamp-end))
+		      nil)))
+	(if (not ts-end)
+	    (message "timestamp delimiter end was not found. Type C-c C-t to insert one.")
+	  (delete-region ts-start ts-end)
+	  (goto-char ts-start)
+	  (run-hooks 'html-helper-timestamp-hook)))))
+  nil)
+(defun my-html-timestamp ()
+  (insert "Last Modified: ")
+  (call-process "env" nil t nil "date"))
+(setq html-helper-timestamp-hook (function my-html-timestamp))
+
+(defun bm () (interactive) 
+  (find-file "~/rc/bm.html"))
+
+(defun memo () (interactive) 
+  (find-file "~/Site/tabesugi.net/memo/cur/cur.html"))
+
+(defun memo1 () (interactive)
+  (call-process "date" nil t nil "+<h5><a href=\"#%d%H%M\" name=\"%d%H%M\">(%H:%M)</a></h5>"))
+
+(defun uuid () (interactive)
+  (call-process "uuid" nil t nil))
+
+(defun newdate () (interactive)
+  (call-process "date" nil t nil "+<h4><a href=\"#%d\" name=\"%d\">/%d</a> <small>[%a]</small></h4>\n<hr noshade size=\"2\">")
+  (memo1))
+
+
+;;  custom
+;;
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(browse-url-netscape-program "firefox")
+ '(python-honour-comment-indentation nil)
+ '(skk-auto-okuri-process nil)
+ '(skk-egg-like-newline nil)
+ '(skk-rom-kana-rule-list (quote (("hh" "h" ("ッ" . "っ")) ("mm" "m" ("ン" . "ん")) ("nn" "n" ("ン" . "ん")) ("?" nil "?") ("@" nil "@") ("$" nil "$") (";" nil ";") (":" nil ":") ("z[" nil "『") ("z]" nil "』") ("z{" nil ("【" . "【")) ("z}" nil ("】" . "】")) ("z`" nil ("“" . "“")) ("z'" nil ("”" . "”")) ("z." nil ("・" . "・")) ("z:" nil ("…" . "…")) ("z~" nil ("〜" . "〜")) ("z>" nil ("→" . "→")) ("z<" nil ("←" . "←")) ("z^" nil ("↑" . "↑")) ("zv" nil ("↓" . "↓")) ("z*" nil ("※" . "※")) ("z-" nil ("−" . "−")) ("z@" nil ("＠" . "＠")) ("z/" nil ("／" . "／")) ("z " nil ("　" . "　")))))
+ '(skk-search-prog-list (quote ((skk-search-kakutei-jisyo-file skk-kakutei-jisyo 10000 t) (skk-search-jisyo-file skk-initial-search-jisyo 10000 t) (skk-search-jisyo-file skk-jisyo 0 t) (skk-search-small-dic) (skk-okuri-search) (skk-search-server skk-aux-large-jisyo 10000))))
+ '(skk-server-portnum 1178)
+ '(skk-share-private-jisyo t))
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(font-lock-comment-face ((((type tty pc) (class color) (background dark)) (:foreground "green"))))
+ '(font-lock-function-name-face ((((type tty) (class color)) (:foreground "cyan"))))
+ '(font-lock-keyword-face ((((type tty) (class color)) (:foreground "yellow"))))
+ '(font-lock-string-face ((((type tty) (class color)) (:foreground "plum1"))))
+ '(font-lock-type-face ((t (:foreground "cyan"))))
+ '(font-lock-variable-name-face ((((type tty) (class color)) (:foreground "orange" :weight light))))
+ '(isearch ((((type tty pc) (class color)) (:background "red" :foreground "yellow"))))
+ '(lazy-highlight ((((type tty pc) (class color)) (:background "blue")))))

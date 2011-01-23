@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 24
+/ESS/!svn/ver/4364/trunk
+END
+rsn.txt
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/ESS/!svn/ver/4363/trunk/rsn.txt
+END
+mkinstalldirs
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/ESS/!svn/ver/801/trunk/mkinstalldirs
+END
+Makeconf
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/ESS/!svn/ver/4286/trunk/Makeconf
+END
+VERSION
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/ESS/!svn/ver/4353/trunk/VERSION
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/ESS/!svn/ver/3696/trunk/.gitignore
+END
+ANNOUNCE
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/ESS/!svn/ver/4359/trunk/ANNOUNCE
+END
+ChangeLog
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/ESS/!svn/ver/4358/trunk/ChangeLog
+END
+RPM.spec
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/ESS/!svn/ver/4359/trunk/RPM.spec
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/ESS/!svn/ver/797/trunk/COPYING
+END
+OONEWS
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/ESS/!svn/ver/4081/trunk/OONEWS
+END
+RPM.spec.in
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/ESS/!svn/ver/3067/trunk/RPM.spec.in
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/ESS/!svn/ver/4359/trunk/README
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/ESS/!svn/ver/4274/trunk/Makefile
+END
+install-sh
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/ESS/!svn/ver/799/trunk/install-sh
+END

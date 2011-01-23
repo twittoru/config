@@ -1,0 +1,30 @@
+# .inputrc for kanji-available
+"\ee": shell-expand-line
+"\eh": backward-kill-word
+"\C-xp": history-search-backward
+"\C-xn": history-search-forward
+"\ep": history-search-backward
+"\en": history-search-forward
+"\eOM": accept-line
+"\eO@": abort
+"\eO\000": abort
+"\eOo": abort
+"\eOk": abort
+"\eOm": abort
+"\eOj": abort
+"\e[2~": abort
+"\e[3~": abort
+"\e[5~": abort
+"\e[6~": abort
+set input-meta on
+set convert-meta on
+set output-meta off
+# kanji
+$if term=kterm
+set convert-meta off
+set output-meta on
+$endif
+$if term=screen
+set convert-meta off
+set output-meta on
+$endif

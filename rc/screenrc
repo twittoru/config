@@ -1,0 +1,119 @@
+# screenrc for euske
+
+escape ^z^z
+
+deflogin on
+#defflow off
+defgr off
+vbell off
+autodetach on
+pastefont on
+startup_message off
+nethack on
+
+msgwait 1
+msgminwait 0
+defscrollback 10000
+
+#hardstatus alwaysmessage
+hardstatus alwayslastline "%{= W} %-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<" 
+bufferfile /home/euske/tmp/x
+sorendition "=b .g"
+
+termcap kterm* KJ=euc:G0
+defencoding eucJP
+
+# Red Hat Hack^H^H^H^HPatch
+#bindkey -d -k kb stuff \010
+
+#remove some stupid / dangerous key bindings
+bind '^\'
+
+bind 0		focus
+bind 1		only
+bind 2		split
+bind 3
+bind 4
+bind 5
+bind 6
+bind 7
+bind 8
+bind 9
+bind '^a'
+bind A
+bind a
+bind '^b'
+bind B
+bind b
+bind '^c'
+bind C
+bind c		screen
+bind '^d'
+bind D		detach
+bind d
+bind '^e'
+bind E
+bind e
+bind '^f'
+bind F
+bind f
+bind '^g'
+bind G
+bind g		exec google-pastebuf
+bind '^h'
+bind H
+bind h
+bind '^i'
+bind I
+bind i		other
+bind '^j'
+bind J
+bind j
+bind '^k'
+bind K		kill
+bind k
+bind '^l'
+bind L
+bind l		screen lynx-pastebuf
+bind '^m'
+bind M
+bind m		exec z-pastebuf
+bind '^n'
+bind N
+bind n		prev
+bind '^o'
+bind O
+bind o		focus
+bind '^p'
+bind P
+bind p		next
+bind '^q'
+bind Q
+bind q
+bind '^r'
+bind R
+bind r
+bind '^s'
+bind S
+bind s
+bind '^t'
+bind T
+bind t
+bind '^u'
+bind U
+bind u
+bind '^v'
+bind V
+bind v
+bind '^w'
+bind W
+bind w
+bind '^X'
+bind X
+bind x
+bind '^Y'
+bind Y
+bind y
+bind '^Z'	meta
+bind Z
+bind z

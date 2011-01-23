@@ -1,0 +1,95 @@
+!! .Xresources for euske
+
+#define A12	-shinonome-gothic-medium-r-normal--12-*-iso8859-1
+#define R12	-shinonome-gothic-medium-r-normal--12-*-jisx0201.1976-0
+#define K12	-shinonome-gothic-medium-r-normal--12-*-jisx0208.1983-0
+#define A14	-shinonome-gothic-medium-r-normal--14-*-iso8859-1
+#define R14	-shinonome-gothic-medium-r-normal--14-*-jisx0201.1976-0
+#define K14	-shinonome-gothic-medium-r-normal--14-*-jisx0208.1983-0
+#define A16	-shinonome-gothic-medium-r-normal--16-*-iso8859-1
+#define R16	-shinonome-gothic-medium-r-normal--16-*-jisx0201.1976-0
+#define K16	-shinonome-gothic-medium-r-normal--16-*-jisx0208.1983-0
+#define A20	-kappa-fixed-bold-r-normal--20-*-iso8859-1
+#define R20	-kappa-fixed-bold-r-normal--20-*-jisx0201.1976-0
+#define K20	-kappa-mincho-bold-r-normal--20-*-jisx0208.1983-0
+#define A24	-sony-fixed-medium-r-normal--24-*-iso8859-1
+#define R24	-sony-fixed-medium-r-normal--24-*-jisx0201.1976-0
+#define K24	-jis-fixed-medium-r-normal--24-*-jisx0208.1983-0
+
+! xterm and kterm
+*VT100*visualBell:	true
+*VT100*foreground:	white
+*VT100*background:	black
+*VT100*cursorColor:	gold
+*VT100*scrollBar:	false
+*VT100*eightBitInput:	false
+
+*VT100*textColor0: black
+*VT100*textColor1: orangered
+*VT100*textColor2: green
+*VT100*textColor3: gold
+*VT100*textColor4: blue
+*VT100*textColor5: plum1
+*VT100*textColor6: skyblue
+*VT100*textColor7: white
+*VT100*textColor8: black
+*VT100*textColor9: orangered
+*VT100*textColor10: green
+*VT100*textColor11: gold
+*VT100*textColor12: blue
+*VT100*textColor13: plum1
+*VT100*textColor14: skyblue
+*VT100*textColor15: white
+
+! kterm
+KTerm*VT100*fontList:	A20,R20,K20
+KTerm*VT100*fontList2:	A12,R12,K12
+KTerm*VT100*fontList3:	A14,R14,K14
+KTerm*VT100*fontList4:	A16,R16,K16
+KTerm*VT100*fontList5:	A20,R20,K20
+KTerm*VT100*fontList6:	A24,R24,K24
+KTerm*VT100*geometry:	80x24-0-0
+KTerm*VT100*lineSpace:	2
+KTerm*VT100*KanjiMode:  euc
+KTerm*VT100*statusNormal: true
+KTerm*VT100*translations: #override\
+	Meta Ctrl<Key>r:	hard-reset()\n\
+	<Btn4Down>:		string(0x1a) string("[Hkkkk")\n\
+	<Btn5Down>:		string(0x1a) string("[Ljjjj")\n\
+	~Ctrl Meta<Key>p:	string(0x1a) string("[Hkkkk")\n\
+	~Ctrl Meta<Key>n:	string(0x1a) string("[Ljjjj")\n\
+	Meta Ctrl<Key>b:	string(0x1a) string("[") string(0x15)\n\
+	Meta Ctrl<Key>f:	string(0x1a) string("[") string(0x04)\n\
+	Meta Ctrl<Key>v:	string(0x1a) string("[") string(0x02)\n\
+	Meta<Key>bracketleft:	string(0x1a) string("[")\n\
+	Ctrl Meta<Key>1:	string(0x1a) string(":select 0") string(0x0a)\n\
+	Ctrl Meta<Key>2:	string(0x1a) string(":select 1") string(0x0a)\n\
+	Ctrl Meta<Key>3:	string(0x1a) string(":select 2") string(0x0a)\n\
+	Ctrl Meta<Key>4:	string(0x1a) string(":select 3") string(0x0a)\n\
+	Ctrl Meta<Key>5:	string(0x1a) string(":select 4") string(0x0a)\n\
+	Ctrl Meta<Key>6:	string(0x1a) string(":select 5") string(0x0a)\n\
+	Ctrl Meta<Key>m:	string(0x1a) string(":select Emacs") string(0x0a)\n\
+	Ctrl Meta<Key>o:	string(0x1a) string("o")\n\
+	Ctrl Meta<Key>i:	string(0x1a) string("i")\n\
+	Ctrl Meta<Key>p:	string(0x1a) string("p")\n\
+	Ctrl Meta<Key>n:	string(0x1a) string("n")\n
+
+! xdvi
+XDvi*paper:	us
+XDvi*shrinkFactor:	4
+!XDvi*geometry:		-0+0
+!XDvi*shrinkFactor:	7
+!XDvi*expert:		true
+
+! gv
+gv.scale: -1
+gv.media: letter
+
+! xpdf
+xpdf.geometry: -0-0
+xpdf.initialZoom: page
+
+! xfontsel and xfd
+XFontSel*font: -misc-fixed-medium-r-*-12-*-iso8859-1
+XFontSel*translations: #override: <Key>q: Quit()\n
+Xfd*translations: #override: <Key>n: Next()\n<Key>p: Prev()\n

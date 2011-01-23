@@ -1,0 +1,169 @@
+"{{{ All reset
+mapclear
+imapclear
+cmapclear
+autocmd!
+"}}}
+"{{{ Load plugins
+" from http://retlet.net/log/2008/09/vimperator-plugins.html
+"      http://subtech.g.hatena.ne.jp/secondlife/20090220/1235094773
+let g:plugin_loader_roots = "~/.vimperator/vimperator-plugins";
+js <<EOF
+liberator.globalVariables.plugin_loader_plugins = <>
+    _libly
+    copy
+    direct_bookmark
+    feedSomeKeys_2
+    twittperator
+    walk-input
+    encodingSwitcher
+    ime_controller
+</>.toString().split(/\s+/).filter(function(n) n);
+EOF
+"}}}
+"{{{1 Options
+""{{{2 Vimperator options
+set ignorecase
+set smartcase
+" goodbye all goodbye
+set showtabline=2
+"Minefield+Vimpだとタブバーが完全に消えないのでとりあえず出しとく
+set guioptions=
+set showstatuslinks=2
+set titlestring=""
+set showmode=false
+" :help open on new tab 
+set newtab=help
+" びむぺれったらさいきょーね！
+set complete=lf
+set maxitems=10
+" no bell & visualbell
+set visualbell
+highlight Bell display :none;
+" [[ and ]]
+set nextpattern+=(>>)+,→
+set previouspattern+=(<<)+,←
+set editor='mvim -f'
+""{{{2 Plugin options
+let g:ldrc_enable="false"
+let g:ldrc_intellgence_bind="true"
+let g:ldrc_hints = "true"
+let g:direct_sbm_use_services_by_tag="h"
+let g:direct_sbm_use_services_by_post="h"
+let g:direct_sbm_is_normalize="false"
+let g:direct_sbm_is_use_migemo="false"
+let g:ex_ime_mode = "inactive"  
+let g:textarea_ime_mode = "inactive"
+""{{{2 Firefox options
+set! dom.popup_maximum=9999
+set! ui.key.generalAccessKey=0
+set! browser.sessionstore.max_tab_undo=20
+set! network.dns.diableIPv6=true
+set! browser.cache.enable=false
+set! browser.panorama.animete_zoom=false
+set! browser.sessionhistory.max_total_viewers=0
+set! browser.sessionstore.max_concurrent_tabs=0
+set! plugins.hide_infobar_for_missing_plugin=true
+"set! browser.tabs.loadDivertedInBackground=true
+
+"http://vimperator.g.hatena.ne.jp/nokturnalmortum/20101011/1286808632
+set! javascript.options.strict=true
+set! javascript.options.showInConsole=true
+set! browser.dom.window.dump.enabled=true
+"2}}}
+"1}}}
+"{{{1 Mappings
+noremap j 5<C-e>
+noremap k 5<C-y>
+noremap J <C-f>
+noremap K <C-b>
+noremap H gT
+noremap L gt
+noremap h <C-o>
+noremap l <C-i>
+noremap o :open .<Space>
+noremap t :tabopen .<Space>
+noremap U :undo<Space>
+noremap gh <C-6>
+map . <Nop>
+noremap ; :
+noremap : ;
+" always ready to edge my sword
+noremap ,s :so ~/.vimperatorrc<CR>
+noremap ,e :!/Applications/MacVim.app/Contents/MacOS/MacVim ~/.vimperatorrc&<CR>
+" social bookmark
+noremap A <Esc>:sbm<Space>[
+" ldrize cooperation
+noremap q :toggleldrc<CR>
+" Readability
+noremap ,r :open javascript:function%20iptxt(){var%20d=document;try{if(!d.body)throw(0);window.location='http://www.instapaper.com/text?u='+encodeURIComponent(d.location.href);}catch(e){alert('Please%20wait%20until%20the%20page%20has%20loaded.');}}iptxt();void(0)<CR>
+noremap ,b :open javascript:window.location='http://b.hatena.ne.jp/add?mode=confirm&title='+escape(document.title)+'&url='+escape(location.href);<CR>
+" Twittperator
+"noremap ,t :tw<Space>
+" for skk
+map <C-j> <Nop>
+imap <C-j> <Nop>
+cmap <C-j> <Nop>
+
+"}}}
+"{{{Autocommands
+" block referer http://d.hatena.ne.jp/wocota/20081230/1230627189
+autocmd LocationChange .*				                set! network.http.sendRefererHeader=2
+autocmd LocationChange .*				                set! browser.tabs.loadDivertedInBackground=false
+autocmd LocationChange .* :fmapc
+autocmd LocationChange 'reader\.livedoor\.com/reader'	set! network.http.sendRefererHeader=1
+autocmd LocationChange 'localhost'		        		set! network.http.sendRefererHeader=0
+autocmd LocationChange '127\.0\.0\.1'		    		set! network.http.sendRefererHeader=0
+autocmd LocationChange 'www\.google\.com'	        	set! network.http.sendRefererHeader=0
+autocmd LocationChange 'www\.google\.com/reader'       	set! browser.tabs.loadDivertedInBackground=true
+autocmd LocationChange www\\.google\\.com/reader        :fmap! -vkey j k n p m s v A r S N P X O gh ga gs gt gu u / ? 
+"}}}
+"{{{Colorschema
+" ==Vimperator_Color_Scheme==
+" name: BrewBlue
+" ==Mono_Color_Scheme==
+hi Hint			color: #333333;		background: White;	font-size: 12px;	font-family: Monaco, Osaka, monospace,  monospace;	padding: 0px 2px;	border: 3px outset #ddd;	opacity:0.80;
+
+hi HintElem		color: Black;		background: PowderBlue;	
+hi HintActive	color: White;		background: SteelBlue;	
+
+hi Normal 		color: SkyBlue;	    background:black ; 	font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi InfoMsg		color: SkyBlue;	    background:black ; 	font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi ModeMsg		color: SkyBlue;	    background:black ; 	font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi MoreMsg		color: SkyBlue;	    background:black ; 	font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi LineNr		color: DodgerBlue;  background:black ; 	font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi Question		color: LightYellow; background:black ;		font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi WarningMsg	color: DeepPink;    background:black ; 	font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi Keyword     	color: CornflowerBlue;				font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi Tag			color: CornflowerBlue;				font-size: 12px;		font-family: Monaco, Osaka, monospace, monospace;
+hi NonText 		background: #333;
+hi Null			color: SkyBlue;
+hi Filter		color: #aacf53;		font-weight: bold;
+
+hi CmdLine      font-family: Monaco; color: Snow; background: black; font-size:  14px; font-weight: normal;
+hi StatusLine   color: Snow; background: black; font-family: Monaco, Osaka, monospace;  padding:3px 0;
+
+hi CompTitle    color: DodgerBlue;	background: Black;	font-weight: bold;	font-family: Monaco, Osaka, monospace, monospace;
+hi CompResult   width: 45%; 		overflow: hidden;				font-family: Monaco, Osaka, monospace, monospace; max-width: 50%;
+"hi CompDesc	width: 50%;								font-family: Monaco, Osaka, monospace, monospace;
+hi CompItem		font-family: Monaco, Osaka, monospace, monospace;
+hi CompItem[selected]	color: #aacf53;		background: #555;		font-family: Monaco, Osaka, monospace, monospace;
+
+"hi Gradient		height: 1px; 		margin-bottom: -1px; 	margin-top: -1px;
+"hi GradientLeft		background: #aacf53;
+"hi GradientRight	background: #333333;
+
+hi Title		color: SkyBlue;
+hi Indicator	color: DodgerBlue;
+hi String		color: DeepPink;
+hi Number		color: DeepPink;
+hi Object		color: Khaki;
+hi Function		color: DeepSkyBlue;
+hi URL			color: PowderBlue;
+
+hi TabNumber	color: White;		font-weight: bold;	font-size: 12px;	font-family: Monaco, Osaka, monospace, monospace;
+
+"}}}
+
+messclear
+" vim: set ft=vimperator:

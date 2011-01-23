@@ -1,0 +1,78 @@
+# minimum .bashrc for euske
+
+umask 022
+ulimit -c 0
+shopt -u sourcepath
+
+if [[ "$PS1" ]]; then
+  # Interactive mode
+
+  # Shell options
+  IGNOREEOF=10
+  HISTSIZE=50000
+  HISTFILESIZE=50000
+  #TMOUT=600  # auto-logout
+  unset MAIL
+  unset command_not_found_handle
+  shopt -s histappend
+  shopt -s histverify
+  shopt -s histreedit
+  shopt -s checkwinsize
+  shopt -u hostcomplete
+  shopt -s checkhash
+  shopt -s no_empty_cmd_completion
+
+  # Env vars
+  unset LANG
+  export PAGER=less
+  export EDITOR=vi
+  export LESS='-X -i -P ?f%f:(stdin).  ?lb%lb?L/%L..  [?eEOF:?pb%pb\%..]'
+  export RSYNC_RSH=ssh
+  export CVS_RSH=ssh
+
+  # Terminal setting
+  #eval `SHELL=sh tset -sQI`
+  stty sane erase ^? intr ^C eof ^D susp ^Z quit ^\\ start ^- stop ^-
+
+  # Prompt setting
+  function prompt_cmd {
+    local s=$?
+    if [[ $s -eq 0 ]]; then return; fi
+    echo "exit $s"
+  }
+  PROMPT_COMMAND=prompt_cmd
+  PS1="\t $HOSTNAME\w[\!]\$ "
+
+  # Functions
+  function .. { cd ..; }
+  function ../ { cd ..; }
+  function tmp { cd ~/tmp; }
+  function ls { command ls -bF "$@"; }
+  function ll { command ls -lF "$@"; }
+  function la { command ls -Fla "$@"; }
+  function j { jobs -l; }
+  function ox { od -Ax -tx1 "$@"; }
+  function g { LC_CTYPE=C command grep -i "$@"; }
+  function r { LC_CTYPE=C command grep -ir "$@"; }
+  function G { LC_CTYPE=C command grep "$@"; }
+  function F { LC_CTYPE=C command fgrep "$@"; }
+  function l { if [ $# -eq 0 ]; then ${PAGER:-less}; elif [ -d "$1" ]; then ls -F "$@"; else ${PAGER:-less} "$@"; fi }
+  function f { if [ ! "$1" ]; then echo 'usage: f pattern [dir ...]'; else n="*$1*"; shift; find . "$@" -name "$n"; fi }
+  function c { command cat "$@"; }
+  function h { command head "$@"; }
+  function t { command tail "$@"; }
+  function T { command tail -f "$@"; }
+  function rmi { command rm -i "$@"; }
+  function mvi { command mv -i "$@"; }
+  function cpi { command cp -i "$@"; }
+
+  # Aliases
+  unalias -a
+  alias 644='chmod 644' # cannot be a function (invalid identifier)
+  alias 755='chmod 755' # cannot be a function (invalid identifier)
+
+  # Completion
+  complete -d cd
+  complete -c man
+  complete -v unset
+fi

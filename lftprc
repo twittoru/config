@@ -1,0 +1,2 @@
+set bmk:save-passwords 1
+set mirror:exclude-regex "(.*\.(haml|db|scss))|(\\.DS_Store)"

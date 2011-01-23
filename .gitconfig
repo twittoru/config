@@ -1,0 +1,5 @@
+[user]
+	name = Tor Ozaki
+	email = tor.ozaki@gmail.com
+[core]
+    editor = "/Applications/MacVim.app/Contents/MacOS/Vim"
