@@ -1,0 +1,70 @@
+URxvt*saveLines:0
+URxvt*termName: xterm-256color
+URxvt*transparent: true
+!URxvt*transparent: false
+URxvt*inheritPixmap: true
+!URxvt*inheritPixmap: false
+URxvt*inheritPixmapforce: true
+URxvt*tintColor: pink
+URxvt*foreground: snow
+URxvt*shading: true
+URxvt*fading: 60
+URxvt*background: [60]#23272F
+URxvt*cursorColor: green
+URxvt*scrollBar: off
+URxvt*geometry: 80x40
+!URxvt*preeditType: OverTheSpot
+
+URxvt*font: \
+      -efont-biwidth-medium-r-normal-*-14-*-*-*-*-*-*-*, \
+      [codeset=ISO10646]x:-xos4-terminus-medium-r-normal-*-14-*-*-*-*-*-iso10646-*, \
+      [codeset=JISX0208]x:-shinonome-gothic-medium-r-normal-*-14-*-*-*-*-*-jisx0208.1990-*, \
+      k14, \
+      7x14
+
+URxvt*boldFont: \
+      [codeset=ISO10646]x:-xos4-terminus-bold-r-normal-*-14-*-*-*-*-*-iso10646-*, \
+      [codeset=JISX0208]x:-shinonome-gothic-bold-r-normal-*-14-*-*-*-*-*-jisx0208.1990-*, \
+      7x14
+
+URxvt*boldItalicFont: \
+      [codeset=ISO10646]x:-efont-fixed-bold-i-normal-*-14-*-*-*-*-*-iso10646-*, \
+      [codeset=JISX0208]x:-shinonome-gothic-bold-i-normal-*-14-*-*-*-*-*-jisx0208.1990-*, \
+      7x14
+
+URxvt*italicFont: \
+      [codeset=ISO10646]x:-efont-fixed-medium-i-normal-*-14-*-*-*-*-*-iso10646-*, \
+      [codeset=JISX0208]x:-shinonome-gothic-medium-i-normal-*-14-*-*-*-*-*-jisx0208.1990-*, \
+        7x14
+
+URxvt*imFont: \
+        [codeset=ISO10646]x:-misc-fixed-medium-r-*--14-*-*-*-*-*-iso10646-*, \
+        [codeset=JISX0208]x:-shinonome-gothic-medium-r-normal--14-*-*-*-*-*-*-*, \
+        7x14
+
+URxvt*depth: 32
+URxvt*color0: #2E3436
+URxvt*color1: #CC0000
+URxvt*color2: #4E9A06
+URxvt*color3: #C4A000
+URxvt*color4: #3465A4
+URxvt*color5: #75507B
+URxvt*color6: #06989A
+URxvt*color7: #D3D7CF
+URxvt*color8: #555753
+URxvt*color9: #EF2929
+URxvt*color10: #8AE234
+URxvt*color11: #FCE94F
+URxvt*color12: #729FCF
+URxvt*color13: #AD7FA8
+URxvt*color14: #34E2E2
+URxvt*color15: #EEEEEC
+
+Emacs.useXIM:false
+Emacs.foreground: snow
+Emacs.background: black
+Xft.antialias: 1
+Xft.hinting: 1
+Xft.hintstyle: hintslight
+Xcursor.theme: Jimmac
+

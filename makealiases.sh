@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/zsh
 
-for filename in emacs stumpwmrc vimperatorrc
+for filename in *(.)
 do
-    ln -s `pwd`/dot.$filename $HOME/.$filename
+    ln -s `pwd`/$filename $HOME/.$filename
 done

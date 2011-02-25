@@ -1,9 +1,0 @@
-Makefile
-autom4te.cache
-config.log
-config.status
-configure.lineno
-stamp-link
-*.tar.gz
-elc-stamp
-navi2ch-config.el

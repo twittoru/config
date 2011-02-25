@@ -1,0 +1,36 @@
+! vim:se ft=xdefaults:
+Rxvt.saveLines:0
+Rxvt.termName: rxvt-256color
+Rxvt.transparent: true
+Rxvt.inheritPixmap: true
+Rxvt.tintColor: pink
+Rxvt.foreground: snow
+Rxvt.background: [75]#000000
+Rxvt.cursorColor: green
+Rxvt.shading: 32
+Rxvt.fading: 60
+Rxvt.scrollBar: off
+Rxvt.geometry: 110x40
+Rxvt.depth: 32
+Rxvt.font: xft:Bitstream Vera Sans Mono:size=10:antialias=true,\
+	   [codeset=JISX0208]xft:M+2VM+IPAG circle:size=12
+Rxvt.imFont: xft:M+2VM+IPAG circle:size=10
+!Rxvt.font: -kochi-gothic-medium-r-normal-*-*-120-*-*-p-*-iso10646-1
+Rxvt.color0: #2E3436
+Rxvt.color1: #CC0000
+Rxvt.color2: #4E9A06
+Rxvt.color3: #C4A000
+Rxvt.color4: #3465A4
+Rxvt.color5: #75507B
+Rxvt.color6: #06989A
+Rxvt.color7: #D3D7CF
+Rxvt.color8: #555753
+Rxvt.color9: #EF2929
+Rxvt.color10: #8AE234
+Rxvt.color11: #FCE94F
+Rxvt.color12: #729FCF
+Rxvt.color13: #AD7FA8
+Rxvt.color14: #34E2E2
+Rxvt.color15: #EEEEEC
+
+Xft.antialias: true
