@@ -3,31 +3,44 @@ export LANG=ja_JP.UTF-8
 export __CF_USER_TEXT_ENCODING="0x1F5:0x08000100:14"
 export EDITOR="vi"
 export RLWRAP_HOME=~/.rlwrap
-export GEM_HOME=~/local/lib/gems 
-export PERL_CPANM_OPT="--local-lib=~/local/"
-export PERL5LIB="$HOME/local/lib/perl5:$PERL5LIB"
 export TERMINFO=/usr/share/terminfo
-export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
+export GEM_HOME=~/local/lib/gems 
+[[ -x "`where cpanm`" ]] && export PERL_CPANM_OPT="--local-lib=~/local/"
+[[ -x "`where cpanm`" ]] && export PERL5LIB="$HOME/local/lib/perl5:$PERL5LIB"
+[[ -x "`where mono`" ]] && export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
+[[ -x "`where cabal`" ]] && export PATH=~/.cabal/bin:$PATH
+
+#mailコマンドが使えない環境でエラーメッセージ表示させない //まあどおせ使わない
+export MAILCHECK=0
+
 bindkey -e
 
 # エイリアスの設定
-alias ls='gls --color=auto'
+function safealias {
+    [[ -f "`where $2`" ]] && alias $1='$2 $3'
+}
+[[ -f "`where gls`" ]] && alias ls='gls --color=auto' || alias ls='ls -G'
 alias la='ls -a'
-alias quit='exit'
-alias vim='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias vi='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-#alias open='gnome-open'
-alias less='/Applications/MacVim.app/Contents/Resources/vim/runtime/macros/less.sh'
 alias ll='ls -alF'
+alias quit='exit'
 alias crontab='crontab -i'
+if [[ -f /Applications/MacVim.app/Contents/MacOS/MacVim ]] then
+    alias vim='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+    alias vi='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+    alias less='/Applications/MacVim.app/Contents/Resources/vim/runtime/macros/less.sh'
+fi
+#safealias open gnome-open
 
 bindkey '^[[3~' backward-delete-char
 bindkey '^@' backward-delete-char
 
-for f in ~/.zsh/command/* ; do 
-    source $f
-done
+# zsh 4.3.10 以降じゃないと動かないと思う
+# http://subtech.g.hatena.ne.jp/secondlife/20110222/1298354852
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^S' history-incremental-pattern-search-forward
 
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # Load RVM into a shell session *as a function*
 fpath=(~/.zsh/function ${fpath})
 
 # ヒストリの設定
@@ -37,6 +50,7 @@ SAVEHIST=10000
 
 # zargsを使う
 autoload zargs
+[[ -d ~/.zsh/command ]] && zargs -l --  ~/.zsh/command/*  -- source
 
 # zedを使う
 autoload zed

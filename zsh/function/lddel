@@ -1,0 +1,7 @@
+# delete low-def img
+function lddel(){            
+    if  test `identify -format "%w*%h" $* | bc` -le 480000
+    then
+        del $*
+    fi
+}

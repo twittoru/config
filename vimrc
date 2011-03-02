@@ -5,7 +5,13 @@ set helplang=ja
 
 syntax enable
 filetype plugin indent on
-colorscheme ap_dark8
+
+let colorlist = map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'), 'fnamemodify(v:val, ":t:r")')
+if count(colorlist,"ap_dark8") != 0
+    colorscheme ap_dark8
+else
+    colorscheme desert
+endif
 
 " color
 set t_Co=8
@@ -17,10 +23,11 @@ set smartindent
 
 set backspace=indent,eol,start
 
-set backup
-set backupcopy&
-set backupdir=$HOME/.vim/backup
-let &directory=&backupdir
+set nobackup
+"set backupcopy&
+"set backupdir=$HOME/.vim/backup
+"let &directory=&backupdir
+set directory=~/tmp
 
 set clipboard=unnamed
 
@@ -176,8 +183,10 @@ if !has('kaoriya')
 endif
 "}}}
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+if exists("*pathogen#runtime_append_all_bundles")
+    call pathogen#runtime_append_all_bundles()
+    call pathogen#helptags()
+endif
 " matchit
 let b:match_ignorecase = 1
 " neocomplcache
@@ -197,7 +206,10 @@ endif
 let g:skk_large_jisyo          = "/Users/tor/Library/Application\ Support/AquaSKK/SKK-JISYO.L"
 let g:skk_jisyo_encoding       = "utf-8"
 let g:skk_large_jisyo_encoding = "euc-jp"
+let g:skk_kutouten_type = "en"
+let g:skk_kutouten_en = "．，"
 let g:skk_auto_save_jisyo      = 1
+let g:skk_keyboard_layout ='azik'
 "unite.vim
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()

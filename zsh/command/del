@@ -1,0 +1,4 @@
+# safe-rm
+function del() {
+    /bin/mv $* ~/.SafeTrash/
+}

@@ -1,0 +1,4 @@
+# delete width < height img
+function rectdel(){            
+[ `gm identify -format "%w -le %h" $*` ] && mv $* rect/
+}

@@ -1,0 +1,15 @@
+#!/bin/zsh
+
+function mmd5 (){
+if [ $# -ne 1 ] ; then
+    dir=$1
+    pic=$2
+else
+    dir=~/Pictures/wallpaper/
+    pic=$1
+fi
+
+    md5sum=$(md5 -q "$pic")
+    mv $pic $dir`echo $md5sum | head -c 2| sed -e 's/./&\//'`/$md5sum`echo $pic | sed -e 's/.*\(\.[^.]*$\)/\1/'` 
+}
+
