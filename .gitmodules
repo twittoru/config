@@ -1,0 +1,30 @@
+[submodule "vim/bundle/skk.vim"]
+	path = vim/bundle/skk.vim
+	url = git://github.com/tyru/skk.vim.git
+[submodule "vim/bundle/neocomplcache"]
+	path = vim/bundle/neocomplcache
+	url = git://github.com/Shougo/neocomplcache.git
+[submodule "vim/bundle/vimfiler"]
+	path = vim/bundle/vimfiler
+	url = git://github.com/Shougo/vimfiler.git
+[submodule "vim/bundle/vimproc"]
+	path = vim/bundle/vimproc
+	url = git://github.com/Shougo/vimproc.git
+[submodule "vim/bundle/unite.vim"]
+	path = vim/bundle/unite.vim
+	url = git://github.com/Shougo/unite.vim.git
+[submodule "vim/bundle/vimshell"]
+	path = vim/bundle/vimshell
+	url = git://github.com/Shougo/vimshell.git
+[submodule "vim/bundle/vim-haml"]
+	path = vim/bundle/vim-haml
+	url = git://github.com/tpope/vim-haml.git
+[submodule "vim/bundle/surround"]
+	path = vim/bundle/surround
+	url = git://github.com/tpope/vim-surround.git
+[submodule "vim/bundle/quickrun"]
+	path = vim/bundle/quickrun
+	url = git://github.com/thinca/vim-quickrun.git
+[submodule "vim/bundle/vim-ref"]
+	path = vim/bundle/vim-ref
+	url = git://github.com/thinca/vim-ref.git
