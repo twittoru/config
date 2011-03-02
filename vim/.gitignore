@@ -1,2 +1,4 @@
 test/
 tags*
+.Winpos
+.netrwhist
