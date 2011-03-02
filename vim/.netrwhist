@@ -1,6 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
-let g:netrw_dirhist_1='/Users/tor'
-let g:netrw_dirhist_2='/Users/tor/.emacs.d/emacs-tiny-tools'
-let g:netrw_dirhist_3='/Users/tor/Documents/repo/config/linux'
-let g:netrw_dirhist_4='/Users/tor/Documents/repo/config'
