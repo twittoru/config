@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 autoload zargs
-cd ../
+setopt extendedglob
+d ../
 
 zargs -l -I{} -- *~util -- ln -s `pwd`/{} $HOME/.{}
