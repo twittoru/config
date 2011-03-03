@@ -28,3 +28,6 @@
 [submodule "vim/bundle/vim-pathogen"]
 	path = vim/bundle/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
+[submodule "vim/bundle/skk.vim"]
+	path = vim/bundle/skk.vim
+	url = git@github.com:twittoru/skk.vim.git
