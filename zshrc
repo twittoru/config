@@ -19,7 +19,11 @@ bindkey -e
 function safealias {
     [[ -f "`where $2`" ]] && alias $1='$2 $3'
 }
-[[ -f "`where gls`" ]] && alias ls='gls --color=auto' || alias ls='ls -G'
+if [[ -f "`where gls`" ]] then
+    alias ls='gls --color=auto'
+else
+   ls --color=auto 1>/dev/null 2>&1 && alias ls='ls --color=auto' || alias ls='ls -G'
+fi
 alias la='ls -a'
 alias ll='ls -alF'
 alias quit='exit'
