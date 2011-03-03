@@ -183,10 +183,8 @@ if !has('kaoriya')
 endif
 "}}}
 
-if exists("*pathogen#runtime_append_all_bundles")
-    call pathogen#runtime_append_all_bundles()
-    call pathogen#helptags()
-endif
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 " matchit
 let b:match_ignorecase = 1
 " neocomplcache
