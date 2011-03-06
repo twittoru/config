@@ -54,7 +54,8 @@ SAVEHIST=10000
 
 # zargsを使う
 autoload zargs
-[[ -d ~/.zsh/command ]] && zargs -l --  ~/.zsh/command/*  -- source
+[[ -d ~/.zsh/command ]] && for f in ~/.zsh/command/* ; do; source $f; done
+
 
 # zedを使う
 autoload zed
