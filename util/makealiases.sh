@@ -2,6 +2,6 @@
 
 autoload zargs
 setopt extendedglob
-d ../
+cd ../
 
 zargs -l -I{} -- *~util -- ln -s `pwd`/{} $HOME/.{}
