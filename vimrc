@@ -120,6 +120,10 @@ autocmd FileType vim nnoremap <buffer> ,p :<C-u>echo len(filter(readfile($MYVIMR
 autocmd FileType help nnoremap <buffer> q <C-w>c
 " goodbye auto comment-out
 autocmd FileType * setlocal formatoptions-=cro
+" for python
+autocmd FileType python setl autoindent
+autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
 "}}}
 " 文字コードの自動認識 {{{
 " form  http://www.kawaz.jp/pukiwiki/?vim#content_1_7

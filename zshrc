@@ -9,6 +9,7 @@ export GEM_HOME=~/local/lib/gems
 [[ -x "`where cpanm`" ]] && export PERL5LIB="$HOME/local/lib/perl5:$PERL5LIB"
 [[ -x "`where mono`" ]] && export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
 [[ -x "`where cabal`" ]] && export PATH=~/.cabal/bin:$PATH
+export PYTHONPATH=~/usr/lib/python2.6/site-packages:${PYTHONPATH}
 
 #mailコマンドが使えない環境でエラーメッセージ表示させない //まあどおせ使わない
 export MAILCHECK=0
@@ -44,13 +45,13 @@ bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # Load RVM into a shell session *as a function*
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # Load RVM into a shell session *as a function*
 fpath=(~/.zsh/function ${fpath})
 
 # ヒストリの設定
 HISTFILE=~/.zhistfile
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 # zargsを使う
 autoload zargs

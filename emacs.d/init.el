@@ -270,37 +270,37 @@
 ;;}}}
 ;;{{{misc
 
-(if (not window-system)
-  (tool-bar-mode 0)
-  (menu-bar-mode 0)
-  (scroll-bar-mode 0)
-  (display-time-mode 0))
-
 ;font from http://sakito.jp/emacs/emacs23.html
 (when (>= emacs-major-version 23)
-  (set-face-attribute 'default nil
-                      :family "monaco"
-                      :height 140)
-  (set-fontset-font
-    (frame-parameter nil 'font)
-    'japanese-jisx0208
-    '("Hiragino Maru Gothic Pro" . "iso10646-1"))
-  (set-fontset-font
-    (frame-parameter nil 'font)
-    'japanese-jisx0212
-    '("Hiragino Maru Gothic Pro" . "iso10646-1"))
-  (set-fontset-font
-    (frame-parameter nil 'font)
-    'mule-unicode-0100-24ff
-    '("monaco" . "iso10646-1"))
-  (setq face-font-rescale-alist
-        '(("^-apple-hiragino.*" . 1.1)
-          (".*osaka-bold.*" . 1.1)
-          (".*osaka-medium.*" . 1.2)
-          (".*courier-bold-.*-mac-roman" . 1.0)
-          (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
-          (".*monaco-bold-.*-mac-roman" . 0.9)
-          ("-cdac$" . 1.3))))
+  (eval-safe
+    (if (not window-system)
+      (tool-bar-mode 0)
+      (menu-bar-mode 0)
+      (scroll-bar-mode 0)
+      (display-time-mode 0))
+    (set-face-attribute 'default nil
+                        :family "monaco"
+                        :height 140)
+    (set-fontset-font
+      (frame-parameter nil 'font)
+      'japanese-jisx0208
+      '("Hiragino Maru Gothic Pro" . "iso10646-1"))
+    (set-fontset-font
+      (frame-parameter nil 'font)
+      'japanese-jisx0212
+      '("Hiragino Maru Gothic Pro" . "iso10646-1"))
+    (set-fontset-font
+      (frame-parameter nil 'font)
+      'mule-unicode-0100-24ff
+      '("monaco" . "iso10646-1"))
+    (setq face-font-rescale-alist
+          '(("^-apple-hiragino.*" . 1.1)
+            (".*osaka-bold.*" . 1.1)
+            (".*osaka-medium.*" . 1.2)
+            (".*courier-bold-.*-mac-roman" . 1.0)
+            (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+            (".*monaco-bold-.*-mac-roman" . 0.9)
+            ("-cdac$" . 1.3)))))
 
 (setq default-frame-alist
       (append (list 
@@ -745,3 +745,18 @@
 ; '(font-lock-variable-name-face ((((type tty) (class color)) (:foreground "orange" :weight light))))
 ; '(isearch ((((type tty pc) (class color)) (:background "red" :foreground "yellow"))))
 ; '(lazy-highlight ((((type tty pc) (class color)) (:background "blue")))))
+
+;;http://weboo-returns.com/blog/emacs-shows-double-space-and-tab/
+(setq whitespace-style
+            '(tabs tab-mark spaces space-mark))
+(setq whitespace-space-regexp "\\(\x3000+\\)")
+(setq whitespace-display-mappings
+            '((space-mark ?\x3000 [?\□])
+                      (tab-mark   ?\t   [?\xBB ?\t])))
+(eval-safe
+  (require 'whitespace)
+  (global-whitespace-mode 1)
+  (set-face-foreground 'whitespace-space "LightSlateGray")
+  (set-face-background 'whitespace-space "DarkSlateGray")
+  (set-face-foreground 'whitespace-tab "LightSlateGray")
+  (set-face-background 'whitespace-tab "DarkSlateGray"))
