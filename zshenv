@@ -1,5 +1,5 @@
 limit coredumpsize 0
 typeset -U path
-path=(~/local/homebrew/bin ~/local/lib/gems/bin /usr/local/bin /usr/local/sbin ~/local/bin $path /opt/local/bin /opt/local/sbin )
+path=(~/local/lib/gems/bin ~/local/bin /usr/bin /usr/sbin /opt/local/bin /opt/local/sbin $path )
 
 
