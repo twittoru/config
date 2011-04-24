@@ -5,8 +5,11 @@ export EDITOR="vi"
 export RLWRAP_HOME=~/.rlwrap
 export TERMINFO=/usr/share/terminfo
 export GEM_HOME=~/local/lib/gems 
+#export DYLD_LIBRARY_PATH=/usr/lib
+export DYLD_SHARED_REGION=avoid
+export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib:$DYLD_FALLBACK_LIBRARY_PATH
 [[ -x "`where cpanm`" ]] && export PERL_CPANM_OPT="--local-lib=~/local/"
-[[ -x "`where cpanm`" ]] && export PERL5LIB="$HOME/local/lib/perl5:$PERL5LIB"
+[[ -x "`where cpanm`" ]] && export PERL5LIB="$HOME/local/lib/perl5:$HOME/local/lib/perl5/darwin-thread-multi-2level:$PERL5LIB"
 [[ -x "`where mono`" ]] && export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
 [[ -x "`where cabal`" ]] && export PATH=~/.cabal/bin:$PATH
 export PYTHONPATH=~/usr/lib/python2.6/site-packages:${PYTHONPATH}
@@ -45,7 +48,8 @@ bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 
 
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" || export GEM_HOME=~/local/lib/gems 
+# Load RVM into a shell session *as a function*
 fpath=(~/.zsh/function ${fpath})
 
 # ヒストリの設定
@@ -76,6 +80,10 @@ autoload -Uz compinit; compinit
 ## 補完時に大小文字を区別しない
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu sele
+
+## zsh で perldoc の補完を速くする方法 - 理系学生日記
+## http://d.hatena.ne.jp/kiririmode/20110422/p1
+zstyle ':completion:*' use-cache true
 
 # sudo でも補完の対象
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /opt/local/sbin /opt/local/bin ~/local/bin
