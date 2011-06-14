@@ -230,3 +230,14 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 " 全部乗せ
 nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+
+
+" http://d.hatena.ne.jp/uasi/20110523/1306079612
+au BufWritePost * call SetUTF8Xattr(expand("<afile>"))
+
+function! SetUTF8Xattr(file)
+	let isutf8 = &fileencoding == "utf-8" || ( &fileencoding == "" && &encoding == "utf-8")
+	if has("unix") && match(system("uname"),'Darwin') != -1 && isutf8
+		call system("xattr -w com.apple.TextEncoding 'utf-8;134217984' '" . a:file . "'")
+	endif
+endfunction

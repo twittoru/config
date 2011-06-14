@@ -9,7 +9,7 @@ export GEM_HOME=~/local/lib/gems
 export DYLD_SHARED_REGION=avoid
 export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib:$DYLD_FALLBACK_LIBRARY_PATH
 [[ -x "`where cpanm`" ]] && export PERL_CPANM_OPT="--local-lib=~/local/"
-[[ -x "`where cpanm`" ]] && export PERL5LIB="$HOME/local/lib/perl5:$HOME/local/lib/perl5/darwin-thread-multi-2level:$PERL5LIB"
+[[ -x "`where cpanm`" ]] && export PERL5LIB="$HOME/local/lib/perl5:$PERL5LIB"
 [[ -x "`where mono`" ]] && export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
 [[ -x "`where cabal`" ]] && export PATH=~/.cabal/bin:$PATH
 export PYTHONPATH=~/usr/lib/python2.6/site-packages:${PYTHONPATH}
@@ -150,6 +150,11 @@ export LS_COLORS='di=01;36'
 
 # ファイルリスト補完でもlsと同様に色をつける｡
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+#zsh で perldoc H::S::P::N::S::P を実現する - 理系学生日記
+#http://d.hatena.ne.jp/kiririmode/20110503/p1
+zstyle ':completion:*:(perldoc|perl):*' matcher 'r:|[:][:]=*'
+
 
 
 
