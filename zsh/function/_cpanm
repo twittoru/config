@@ -1,0 +1,9 @@
+#compdef cpanm
+
+function _cpanm {
+        local packages=$(find $HOME/.cpanm -name 02packages.details.txt | head -1)
+            local linenum=$(wc -l $packages | awk '{ print $1 }')
+
+                # skip a header section
+                    compadd $(tail -$(($linenum - 9)) $packages | awk '{ print $1 }')
+}

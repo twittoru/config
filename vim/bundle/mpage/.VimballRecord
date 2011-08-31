@@ -1,0 +1,1 @@
+mpage.vba: call delete('/Users/tor/.vim/bundle/mpage//plugin/mpage.vim')|call delete('/Users/tor/.vim/bundle/mpage//plugin/cecutil.vim')|call delete('/Users/tor/.vim/bundle/mpage//doc/mpage.txt')

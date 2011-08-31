@@ -1,0 +1,16 @@
+--2011-07-30 00:56:23--  https://gist.github.com/raw/871500/aab64867474e47926990de9e0e1fbd940ab3778d/_plackup
+Resolving gist.github.com... 207.97.227.243
+Connecting to gist.github.com|207.97.227.243|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.github.com/gist/871500/aab64867474e47926990de9e0e1fbd940ab3778d/_plackup [following]
+--2011-07-30 00:56:24--  https://raw.github.com/gist/871500/aab64867474e47926990de9e0e1fbd940ab3778d/_plackup
+Resolving raw.github.com... 207.97.227.243
+Connecting to raw.github.com|207.97.227.243|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1422 (1.4K) [text/plain]
+Saving to: `_plackup.1'
+
+     0K .                                                     100% 61.6M=0s
+
+2011-07-30 00:56:26 (61.6 MB/s) - `_plackup.1' saved [1422/1422]
+
