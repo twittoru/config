@@ -124,6 +124,8 @@ autocmd FileType * setlocal formatoptions-=cro
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
+autocmd BufNewFile,BufRead *.tt,*.cfm set filetype=html
+autocmd BufNewFile,BufRead *.t set filetype=perl
 "}}}
 " 文字コードの自動認識 {{{
 " form  http://www.kawaz.jp/pukiwiki/?vim#content_1_7
@@ -241,3 +243,9 @@ function! SetUTF8Xattr(file)
 		call system("xattr -w com.apple.TextEncoding 'utf-8;134217984' '" . a:file . "'")
 	endif
 endfunction
+
+" http://vim-users.jp/2011/07/hack222/
+set cursorline
+set cursorcolumn
+highlight CursorLine     term=underline cterm=underline guibg=Grey90
+"highlight CursorColumn   term=underline ctermbg=7 guibg=Grey90
