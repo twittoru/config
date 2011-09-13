@@ -31,3 +31,6 @@
 [submodule "vim/bundle/skk.vim"]
 	path = vim/bundle/skk.vim
 	url = git://github.com/twittoru/skk.vim.git
+[submodule "vim/bundle/vim-alignta"]
+	path = vim/bundle/vim-alignta
+	url = https://github.com/h1mesuke/vim-alignta
