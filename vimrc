@@ -120,6 +120,7 @@ autocmd FileType vim nnoremap <buffer> ,p :<C-u>echo len(filter(readfile($MYVIMR
 autocmd FileType help nnoremap <buffer> q <C-w>c
 " goodbye auto comment-out
 autocmd FileType * setlocal formatoptions-=cro
+autocmd FileType text setlocal formatoptions=q
 " for python
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
@@ -195,17 +196,6 @@ call pathogen#helptags()
 let b:match_ignorecase = 1
 " neocomplcache
 let g:neocomplcache_enable_at_startup = 1
-" eskk.vim
-if has('vim_starting')
-    let g:eskk_dictionary = '~/.skk-jisyo'
-
-    if has('mac')
-        let g:eskk_large_dictionary = "~/Library/Application\ Support/AquaSKK/SKK-JISYO.L"
-    elseif has('win32') || has('win64')
-        let g:eskk_large_dictionary = "~/SKK_JISYO.L"
-    else
-    endif
-endif
 "skk.vim
 let g:skk_large_jisyo          = "/Users/tor/Library/Application\ Support/AquaSKK/SKK-JISYO.L"
 let g:skk_jisyo_encoding       = "utf-8"
@@ -214,38 +204,28 @@ let g:skk_kutouten_type = "en"
 let g:skk_kutouten_en = "．，"
 let g:skk_auto_save_jisyo      = 1
 let g:skk_keyboard_layout ='azik'
-"unite.vim
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()
-  " 単語単位からパス単位で削除するように変更
-  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-endfunction
-" 起動時にインサートモードで開始
-let g:unite_enable_start_insert = 1
-" バッファ一覧
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-" ファイル一覧
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-" レジスタ一覧
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" 全部乗せ
-nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
-
 
 " http://d.hatena.ne.jp/uasi/20110523/1306079612
 au BufWritePost * call SetUTF8Xattr(expand("<afile>"))
 
 function! SetUTF8Xattr(file)
-	let isutf8 = &fileencoding == "utf-8" || ( &fileencoding == "" && &encoding == "utf-8")
-	if has("unix") && match(system("uname"),'Darwin') != -1 && isutf8
-		call system("xattr -w com.apple.TextEncoding 'utf-8;134217984' '" . a:file . "'")
-	endif
+    let dic = { 
+                \ 'euc-jp' : 'EUC-JP;2361',
+                \ 'cp932': 'SHIFT_JIS;2561',
+                \ 'iso-2022-jp' : 'ISO-2022-JP;2080',
+                \ 'utf-8'  : 'UTF-8;134217984',
+                \}
+    let enc = get(dic,&fileencoding == "" ? &encoding : &fileencoding,"NOT_FOUND")
+    if has("unix") && match(system("uname"),'Darwin') != -1 && (enc != "NOT_FOUND")
+        call system("xattr -w com.apple.TextEncoding '". enc ."' " . a:file )
+    endif
 endfunction
 
 " http://vim-users.jp/2011/07/hack222/
 set cursorline
 set cursorcolumn
-highlight CursorLine     term=underline cterm=underline guibg=Grey90
+highlight CursorLine     term=underline guibg=Grey90
 "highlight CursorColumn   term=underline ctermbg=7 guibg=Grey90
+
+"http://d.hatena.ne.jp/thinca/20120130/1327919787
+set list listchars=trail:_,tab:>-

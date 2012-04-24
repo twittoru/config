@@ -1,7 +1,12 @@
 #!/bin/zsh
 # delete low-def img
 function lddel(){            
-    set -A flag $(gm identify -format '%w %h ' $*)
+    set -A flag $(gm identify -format '%w %h ' "$*")
     #[ ${#flag} -ne 2] && echo "$* : error!" && del $*
-    [ $((4*$flag[1])) -lt $((5*$flag[2])) -o $(($flag[1]*$flag[2])) -lt $((800*600)) ] && del $*
+    [ $((4*$flag[1])) -lt $((5*$flag[2])) -o $(($flag[1]*$flag[2])) -le $((800*600)) ] && del $*
+}
+function xldel(){            
+    set -A flag $(gm identify -format '%w %h ' "$*")
+    #[ ${#flag} -ne 2] && echo "$* : error!" && del $*
+    [ $(($flag[1]*$flag[2])) -gt $((1920*1080)) ] && del $*
 }

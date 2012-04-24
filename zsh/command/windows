@@ -1,5 +1,7 @@
 # permission change for Windows files
 function windows(){
-chmod 755 ./**/*(/)
-chmod 644 ./**/*(^/)
+    for i in ./**/*(/);do
+        chmod 755 $i
+        chmod 644 $i
+    done
 }

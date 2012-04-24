@@ -19,6 +19,7 @@ export MAILCHECK=0
 
 bindkey -e
 
+alias zip='zip -x@~/.ziprc'
 # エイリアスの設定
 function safealias {
     [[ -f "`where $2`" ]] && alias $1='$2 $3'

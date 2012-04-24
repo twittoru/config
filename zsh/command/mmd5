@@ -9,7 +9,8 @@ else
     pic=$1
 fi
 
+    ext=$(gm identify -format "%m" "$pic[0]" | tr "[A-Z]" "[a-z]")
     md5sum=$(md5 -q "$pic")
-    mv $pic $dir`echo $md5sum | head -c 2| sed -e 's/./&\//'`/$md5sum`echo $pic | sed -e 's/.*\(\.[^.]*$\)/\1/'` 
+    mv "$pic" $dir`echo $md5sum | head -c 2| sed -e 's/./&\//'`/$md5sum.$ext
 }
 
