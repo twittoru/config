@@ -34,3 +34,6 @@
 [submodule "vim/bundle/vim-alignta"]
 	path = vim/bundle/vim-alignta
 	url = https://github.com/h1mesuke/vim-alignta
+[submodule "vim/bundle/vimclojure"]
+	path = vim/bundle/vimclojure
+	url = git://github.com/vim-scripts/VimClojure.git
