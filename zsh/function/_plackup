@@ -1,16 +1,26 @@
---2011-07-30 00:56:23--  https://gist.github.com/raw/871500/aab64867474e47926990de9e0e1fbd940ab3778d/_plackup
-Resolving gist.github.com... 207.97.227.243
-Connecting to gist.github.com|207.97.227.243|:443... connected.
-HTTP request sent, awaiting response... 302 Found
-Location: https://raw.github.com/gist/871500/aab64867474e47926990de9e0e1fbd940ab3778d/_plackup [following]
---2011-07-30 00:56:24--  https://raw.github.com/gist/871500/aab64867474e47926990de9e0e1fbd940ab3778d/_plackup
-Resolving raw.github.com... 207.97.227.243
-Connecting to raw.github.com|207.97.227.243|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 1422 (1.4K) [text/plain]
-Saving to: `_plackup.1'
+#compdef plackup
+#autoload
 
-     0K .                                                     100% 61.6M=0s
+typeset -A opt_args
+local context state line
 
-2011-07-30 00:56:26 (61.6 MB/s) - `_plackup.1' saved [1422/1422]
+_arguments -C \
+    '(- 1 *)'{-h,--help}'[prints help]' \
+    '(-a --app)'{-a,--app}'[locate a .psgi script.]' \
+    '(-o --host)'{-o,--host}'[the interface a TCP based server daemon binds to.]' \
+    '(-p --port)'{-p,--port}'[the port number a TCP based server daemon listens on.]' \
+    '(-s --server)'{-s,--server}'[select a specific implementation to run on.]' \
+    '(-S --socket)'{-S,--socket}'[UNIX domain socket path to listen on.]' \
+    '(-l --listen)'{-l,--listen}'[addresses to listen on.]' \
+    '(-D --daemonize)'{-D,--daemonize}'[makes the process go background.]' \
+    '(-e)-e[evaluate the given code as a PSGI app.]' \
+    '(-I)-I[specify perl library include path.]' \
+    '(-M)-M[specify modules to load before loading the app code.]' \
+    '(-E --env)'{-E,--env}'[specify the environment option.]' \
+    '(-r --reload)'{-r,--reload}'[make plackup to watch updates from your development directory and restarts the server whenever a file is updated.]' \
+    '(-R --Reload)'{-R,--Reload}'[allows you to specify the path to watch file updates separated by comma.]' \
+    '(-L --Loader)'{-L,--Loader}'[specify the server loading subclass that implements how to run the server.]' \
+    '(--access-log)--access-log[specify the pathname of a file where the access log should be written.]' \
+    '(1 *): :->args' && return 0
 
+return ret
