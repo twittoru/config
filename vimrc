@@ -16,7 +16,6 @@ endif
 " color
 set t_Co=8
 
-
 " indent 
 set autoindent
 set smartindent
@@ -32,7 +31,6 @@ set directory=~/tmp
 set clipboard=unnamed
 
 set viminfo=
-
 
 " search
 set ignorecase
@@ -79,7 +77,6 @@ func! String2Hex(str)
   return out
 endfunc
 
-
 set statusline=[%n]%1*%m%*%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %f%=[%<%{fnamemodify(getcwd(),':~')}]%-8([%{GetB()}]%)\ %-11(%l,%c%V%)\ %4P
 "set rulerformat=%=%1*%m%*%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y%f[%<%{fnamemodify(getcwd(),':~')}][%n]%4P
 
@@ -92,10 +89,9 @@ set hidden
 set autoread
 
 set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 
 set tags+=~/.vim/tags/cpp
 
@@ -110,23 +106,27 @@ nnoremap <silent> ,e :<C-u>split $MYVIMRC<CR>
 
 " mimic it emacsen
 nnoremap <C-h> :<C-u>help<Space>
-"" autocmds {{{ 
+"" autocmds {{{
 " clear autocmds when load vimrc
 "autocmd!
 " calc SENTO-RYOKU
 autocmd FileType vim nnoremap <buffer> ,p :<C-u>echo len(filter(readfile($MYVIMRC), 'v:val !~ "^\\s*$"'))<CR>
+
 " view helpfile like less
 "autocmd FileType help nnoremap <buffer> q <C-w>q
 autocmd FileType help nnoremap <buffer> q <C-w>c
+
 " goodbye auto comment-out
 autocmd FileType * setlocal formatoptions-=cro
 autocmd FileType text setlocal formatoptions=q
+
 " for python
 autocmd FileType python setl autoindent
 autocmd FileType python setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType python setl tabstop=8 expandtab shiftwidth=4 softtabstop=4
+
 autocmd BufNewFile,BufRead *.tt,*.cfm set filetype=html
-autocmd BufNewFile,BufRead *.t set filetype=perl
+autocmd BufNewFile,BufRead *.t,*.psgi set filetype=perl
 "}}}
 " 文字コードの自動認識 {{{
 " form  http://www.kawaz.jp/pukiwiki/?vim#content_1_7
@@ -200,31 +200,32 @@ let g:neocomplcache_enable_at_startup = 1
 let g:skk_large_jisyo          = "/Users/tor/Library/Application\ Support/AquaSKK/SKK-JISYO.L"
 let g:skk_jisyo_encoding       = "utf-8"
 let g:skk_large_jisyo_encoding = "euc-jp"
-let g:skk_kutouten_type = "en"
-let g:skk_kutouten_en = "．，"
+let g:skk_kutouten_type        = "en"
+let g:skk_kutouten_en          = "．，"
 let g:skk_auto_save_jisyo      = 1
-let g:skk_keyboard_layout ='azik'
+let g:skk_keyboard_layout      = 'azik'
 
 " http://d.hatena.ne.jp/uasi/20110523/1306079612
 au BufWritePost * call SetUTF8Xattr(expand("<afile>"))
-
 function! SetUTF8Xattr(file)
-    let dic = { 
-                \ 'euc-jp' : 'EUC-JP;2361',
-                \ 'cp932': 'SHIFT_JIS;2561',
-                \ 'iso-2022-jp' : 'ISO-2022-JP;2080',
-                \ 'utf-8'  : 'UTF-8;134217984',
-                \}
+  if has("unix") && match(system("uname"),'Darwin') != -1
+    let dic = {
+          \ 'euc-jp' : 'EUC-JP;2361',
+          \ 'cp932': 'SHIFT_JIS;2561',
+          \ 'iso-2022-jp' : 'ISO-2022-JP;2080',
+          \ 'utf-8'  : 'UTF-8;134217984',
+          \}
     let enc = get(dic,&fileencoding == "" ? &encoding : &fileencoding,"NOT_FOUND")
-    if has("unix") && match(system("uname"),'Darwin') != -1 && (enc != "NOT_FOUND")
-        call system("xattr -w com.apple.TextEncoding '". enc ."' " . a:file )
+    if  enc != "NOT_FOUND"
+      call system("xattr -w com.apple.TextEncoding '". enc ."' " . a:file )
     endif
+  endif
 endfunction
 
 " http://vim-users.jp/2011/07/hack222/
 set cursorline
 set cursorcolumn
-highlight CursorLine     term=underline guibg=Grey90
+highlight CursorLine term=underline guibg=Grey90
 "highlight CursorColumn   term=underline ctermbg=7 guibg=Grey90
 
 "http://d.hatena.ne.jp/thinca/20120130/1327919787
