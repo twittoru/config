@@ -1,7 +1,0 @@
-# delete width < height img
-function rectdel(){            
-if  test `identify -format "%w -le %h" $*`
-then
-    del $*
-fi
-}

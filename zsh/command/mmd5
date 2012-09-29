@@ -5,12 +5,15 @@ if [ $# -ne 1 ] ; then
     dir=$1
     pic=$2
 else
-    dir=~/Pictures/wallpaper/
-    pic=$1
+    dir=/opt/home/twittoru/wallpaper
+    pic="$1"
 fi
 
-    ext=$(gm identify -format "%m" "$pic[0]" | tr "[A-Z]" "[a-z]")
+    ext=$(gm identify -format "%m" "$pic""[0]" | tr "[A-Z]" "[a-z]")
     md5sum=$(md5 -q "$pic")
-    mv "$pic" $dir`echo $md5sum | head -c 2| sed -e 's/./&\//'`/$md5sum.$ext
+    target=$dir/$(echo $md5sum | head -c 2| sed -e 's/./&\//')/$md5sum"."$ext
+    touch $target
+    cp "$pic" $target
+    rm "$pic"
 }
 

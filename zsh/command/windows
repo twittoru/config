@@ -1,7 +1,0 @@
-# permission change for Windows files
-function windows(){
-    for i in ./**/*(/);do
-        chmod 755 $i
-        chmod 644 $i
-    done
-}
