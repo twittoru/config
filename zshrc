@@ -4,15 +4,13 @@ export __CF_USER_TEXT_ENCODING="0x1F5:0x08000100:14"
 export EDITOR="vi"
 export RLWRAP_HOME=~/.rlwrap
 export TERMINFO=/usr/share/terminfo
-export GEM_HOME=~/local/lib/gems 
+## for mac {{{
 #export DYLD_LIBRARY_PATH=/usr/lib
 export DYLD_SHARED_REGION=avoid
 export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib:$DYLD_FALLBACK_LIBRARY_PATH
-[[ -x "`where cpanm`" ]] && export PERL_CPANM_OPT="--local-lib=~/local/"
-[[ -x "`where cpanm`" ]] && export PERL5LIB="$HOME/local/lib/perl5:$PERL5LIB"
+## }}}
 [[ -x "`where mono`" ]] && export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
-[[ -x "`where cabal`" ]] && export PATH=~/.cabal/bin:$PATH
-export PYTHONPATH=~/usr/lib/python2.6/site-packages:${PYTHONPATH}
+[[ $(uname) -eq "Darwin" ]] && export PATH="$HOME/Library/Haskell/bin:$PATH"
 
 #mailコマンドが使えない環境でエラーメッセージ表示させない //まあどおせ使わない
 export MAILCHECK=0
@@ -20,11 +18,7 @@ export MAILCHECK=0
 bindkey -e
 
 alias zip='zip -x@~/.ziprc'
-# エイリアスの設定
-function safealias {
-    [[ -f "`where $2`" ]] && alias $1='$2 $3'
-}
-if [[ -f "`where gls`" ]] then
+if [[ -f $(which gls) ]] then
     alias ls='gls --color=auto'
 else
    ls --color=auto 1>/dev/null 2>&1 && alias ls='ls --color=auto' || alias ls='ls -G'
@@ -32,13 +26,11 @@ fi
 alias la='ls -a'
 alias ll='ls -alF'
 alias quit='exit'
-alias crontab='crontab -i'
 if [[ -f /Applications/MacVim.app/Contents/MacOS/MacVim ]] then
     alias vim='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
     alias vi='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
     alias less='/Applications/MacVim.app/Contents/Resources/vim/runtime/macros/less.sh'
 fi
-#safealias open gnome-open
 
 bindkey '^[[3~' backward-delete-char
 bindkey '^@' backward-delete-char
@@ -55,11 +47,13 @@ fpath=(~/.zsh/function ${fpath})
 
 # ヒストリの設定
 HISTFILE=~/.zhistfile
-HISTSIZE=1000000
-SAVEHIST=1000000
+HISTSIZE=10000000
+SAVEHIST=10000000
 
 # zargsを使う
 autoload zargs
+
+# 自分で書いたコマンド類
 [[ -d ~/.zsh/command ]] && for f in ~/.zsh/command/* ; do; source $f; done
 
 
@@ -155,18 +149,6 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 #zsh で perldoc H::S::P::N::S::P を実現する - 理系学生日記
 #http://d.hatena.ne.jp/kiririmode/20110503/p1
 zstyle ':completion:*:(perldoc|perl):*' matcher 'r:|[:][:]=*'
-
-
-
-
-## ^で､cd ..
-#function cdup() {
-#echo
-#cd ..
-#zle reset-prompt
-#}
-#zle -N cdup
-#bindkey '\^' cdup
 
 # ディレクトリ名だけで､ディレクトリの移動をする｡
 setopt auto_cd
@@ -295,8 +277,10 @@ makemodal vi-cmd-mode          NORMAL
 
 unfunction makemodal
 setopt prompt_subst
+
 PROMPT='${USER}@${HOST} %(5~,%-2~/.../%2~,%~)%  ${RESET}
 $ ${RESET}' 
+#TRAPALRM () { zle reset-prompt }; TMOUT=30
 
 setopt nolistbeep       # beep off
 setopt auto_cd          # directory名だけで移動可
