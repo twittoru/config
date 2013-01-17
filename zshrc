@@ -7,10 +7,10 @@ export TERMINFO=/usr/share/terminfo
 ## for mac {{{
 #export DYLD_LIBRARY_PATH=/usr/lib
 export DYLD_SHARED_REGION=avoid
-export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib:$DYLD_FALLBACK_LIBRARY_PATH
+export DYLD_FALLBACK_LIBRARY_PATH=/opt/local/lib:$HOME/local/lib:$DYLD_FALLBACK_LIBRARY_PATH
 ## }}}
 [[ -x "`where mono`" ]] && export PKG_CONFIG_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig
-[[ $(uname) -eq "Darwin" ]] && export PATH="$HOME/Library/Haskell/bin:$PATH"
+[[ $(uname) -eq "Darwin" ]] && export PATH="/opt/local/libexec/ccache:$HOME/Library/Haskell/bin:$PATH"
 
 #mailコマンドが使えない環境でエラーメッセージ表示させない //まあどおせ使わない
 export MAILCHECK=0
