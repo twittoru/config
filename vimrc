@@ -14,7 +14,7 @@ else
 endif
 
 " color
-set t_Co=8
+" set t_Co=8
 
 " indent 
 set autoindent
@@ -189,6 +189,7 @@ if !has('kaoriya')
     "endif
 endif
 "}}}
+set ambiwidth=double
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -224,9 +225,10 @@ endfunction
 
 " http://vim-users.jp/2011/07/hack222/
 set cursorline
-set cursorcolumn
+"set cursorcolumn
 highlight CursorLine term=underline guibg=Grey90
 "highlight CursorColumn   term=underline ctermbg=7 guibg=Grey90
 
 "http://d.hatena.ne.jp/thinca/20120130/1327919787
-set list listchars=trail:_,tab:>-
+"set list listchars=trail:_,tab:>-
+set list listchars=trail:_,tab:\ \ 
