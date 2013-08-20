@@ -10,3 +10,8 @@ function xldel(){
     #[ ${#flag} -ne 2] && echo "$* : error!" && del $*
     [ $(($flag[1]*$flag[2])) -gt $((1920*1080)) ] && del $*
 }
+function mvwithext(){            
+    set -A flag $(gm identify -format '%m ' "$1")
+    mv $1 $1.$flag[1]
+    [ $(($flag[1]*$flag[2])) -gt $((1920*1080)) ] && del $*
+}

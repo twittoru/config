@@ -17,3 +17,14 @@ fi
     rm "$pic"
 }
 
+function mmd5single (){
+    dir=$1
+    pic=$2
+    ext=$(gm identify -format "%m" "$pic""[0]" | tr "[A-Z]" "[a-z]")
+    md5sum=$(md5 -q "$pic")
+    target=$dir/$md5sum"."$ext
+    #touch $target
+    #cp "$pic" $target
+    #rm "$pic"
+    mv "$pic" $target
+}
